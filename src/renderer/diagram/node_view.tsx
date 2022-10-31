@@ -1,11 +1,9 @@
 import React from 'react';
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import internal from 'stream';
 
-type MyProps = { name: string; x: number; y: number };
+type NodeViewProps = { name: string; x: number; y: number };
 
 // eslint-disable-next-line react/prefer-stateless-function
-class Node extends React.Component<MyProps> {
+export default class NodeView extends React.Component<NodeViewProps> {
   render() {
     const { name } = this.props;
     const { x, y } = this.props;
@@ -21,5 +19,3 @@ class Node extends React.Component<MyProps> {
     );
   }
 }
-
-export default Node;
