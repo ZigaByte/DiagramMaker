@@ -11,9 +11,9 @@ import Position from 'model/graph/position';
 class Main extends React.Component {
   render() {
     const graph: Graph = new Graph();
-    graph.AddNode(new Node(1, new Position(100, 100), 'Hello'));
-    graph.AddNode(new Node(2, new Position(300, 200), 'Ola'));
-    graph.AddNode(new Node(3, new Position(400, 100), 'Zdravo'));
+    graph.AddNode(new Node(new Position(100, 100), 'Hello'));
+    graph.AddNode(new Node(new Position(300, 200), 'Ola'));
+    graph.AddNode(new Node(new Position(400, 100), 'Zdravo'));
 
     return (
       <div

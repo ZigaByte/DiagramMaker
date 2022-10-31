@@ -7,8 +7,7 @@ export default class Node {
 
   text: string;
 
-  constructor(id: number, position: Position, text: string) {
-    this.id = id;
+  constructor(position: Position, text: string) {
     this.position = position;
     this.text = text;
   }

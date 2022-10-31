@@ -4,6 +4,7 @@ export default class Graph {
   nodes: Node[] = [];
 
   AddNode(node: Node): void {
+    node.id = this.GetNextId();
     this.nodes.push(node);
   }
 
@@ -13,5 +14,13 @@ export default class Graph {
 
   GetNodes(): Node[] {
     return this.nodes;
+  }
+
+  GetNextId(): number {
+    // Maybe not the best
+    if (this.nodes.length > 0) {
+      return this.nodes[this.nodes.length - 1].id + 1;
+    }
+    return 1;
   }
 }
