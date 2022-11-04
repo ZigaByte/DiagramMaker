@@ -16,12 +16,9 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
   }
 
   handleClick = (event: React.MouseEvent) => {
+    console.log('clicked graph');
     const commandDown = event.metaKey;
     if (commandDown) {
-      // const { graph } = this.props;
-      // graph.AddNode(
-      //   new Node()
-      // );
       const { onCommand } = this.props;
       onCommand(new AddNodeCommand(new Position(event.clientX, event.clientY)));
     }
@@ -31,11 +28,11 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
   render() {
     const { graph } = this.state;
     return (
-      <div
+      <button
         onClick={this.handleClick}
         onKeyDown={() => {}}
-        role="button"
         tabIndex={0}
+        type="button"
         style={{
           // backgroundColor: 'green',
           position: 'absolute',
@@ -51,7 +48,7 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
             y={node.position.y}
           />
         ))}
-      </div>
+      </button>
     );
   }
 }
