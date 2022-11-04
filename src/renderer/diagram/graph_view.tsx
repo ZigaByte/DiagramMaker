@@ -17,8 +17,6 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
 
   handleClick = (event: React.MouseEvent) => {
     const commandDown = event.metaKey;
-    console.log(commandDown);
-    console.log(event);
     if (commandDown) {
       const { graph } = this.props;
       graph.AddNode(
@@ -29,7 +27,6 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
   };
 
   render() {
-    console.log(this.state);
     const { graph } = this.state;
     return (
       <div

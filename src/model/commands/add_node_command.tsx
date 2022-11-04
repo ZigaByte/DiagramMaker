@@ -1,13 +1,18 @@
-class AddNodeCommand implements Command {
+import Position from 'model/graph/position';
+import Graph from 'model/graph/graph';
+import Node from 'model/graph/node';
+import ICommand from './icommand';
+
+export default class AddNodeCommand implements ICommand {
   position: Position;
 
-  newNode: Node = null;
-
   constructor(position: Position) {
-    super();
     this.position = position;
   }
 
-  Apply(graph: Graph): void {}
+  Execute(graph: Graph): void {
+    graph.AddNode(new Node(this.position, 'New Node'));
+  }
+
   Undo(graph: Graph): void {}
 }
