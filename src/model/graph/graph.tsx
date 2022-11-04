@@ -16,6 +16,10 @@ export default class Graph {
     return this.nodes;
   }
 
+  GetNode(id: number): Node | undefined {
+    return this.nodes.find((node) => node.id === id);
+  }
+
   GetNextId(): number {
     // Maybe not the best
     if (this.nodes.length > 0) {

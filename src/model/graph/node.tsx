@@ -1,11 +1,13 @@
 import Position from './position';
 
 export default class Node {
-  id: number;
+  id: number = -1;
 
   position: Position;
 
   text: string;
+
+  selected: boolean = false;
 
   constructor(position: Position, text: string) {
     this.position = position;

@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Graph from 'model/graph/graph';
-import Node from 'model/graph/node';
+import AddNodeCommand from 'model/commands/add_node_command';
 import Position from 'model/graph/position';
 import ICommand from 'model/commands/icommand';
 import Workflow from 'model/workflow';
@@ -17,11 +17,12 @@ class Main extends React.Component<MainProps, MainState> {
     super(props);
 
     const graph: Graph = new Graph();
-    graph.AddNode(new Node(new Position(100, 100), 'Hello'));
-    graph.AddNode(new Node(new Position(300, 200), 'Ola'));
-    graph.AddNode(new Node(new Position(400, 100), 'Zdravo'));
 
     const workflow: Workflow = new Workflow(graph);
+    workflow.Execute(new AddNodeCommand(new Position(100, 100)));
+    workflow.Execute(new AddNodeCommand(new Position(300, 200)));
+    workflow.Execute(new AddNodeCommand(new Position(400, 100)));
+
     this.state = { workflow };
   }
 
