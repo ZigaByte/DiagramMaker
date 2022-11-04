@@ -1,4 +1,5 @@
 import React from 'react';
+import './node_view.css';
 
 type NodeViewProps = { name: string; x: number; y: number };
 
@@ -14,7 +15,7 @@ export default class NodeView extends React.Component<NodeViewProps> {
     };
     return (
       <div style={position}>
-        <h1>{name}</h1>
+        <h1 className="node">{name}</h1>
       </div>
     );
   }

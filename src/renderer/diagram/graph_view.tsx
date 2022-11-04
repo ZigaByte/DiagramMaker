@@ -38,7 +38,7 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
         role="button"
         tabIndex={0}
         style={{
-          backgroundColor: 'green',
+          // backgroundColor: 'green',
           position: 'absolute',
           width: '100%',
           height: '100%',
