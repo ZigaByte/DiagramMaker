@@ -1,13 +1,12 @@
 import React from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import GraphView from './diagram/graph_view';
-import icon from '../../assets/icon.svg';
 import './App.css';
 import Graph from 'model/graph/graph';
 import Node from 'model/graph/node';
 import Position from 'model/graph/position';
 import ICommand from 'model/commands/icommand';
 import Workflow from 'model/workflow';
+import GraphView from './diagram/graph_view';
 
 type MainProps = unknown;
 type MainState = { workflow: Workflow };
@@ -26,7 +25,7 @@ class Main extends React.Component<MainProps, MainState> {
     this.state = { workflow };
   }
 
-  on_command = (command: ICommand) => {
+  onCommand = (command: ICommand) => {
     const { workflow } = this.state;
     workflow.Execute(command);
     this.setState({ workflow });
@@ -37,7 +36,7 @@ class Main extends React.Component<MainProps, MainState> {
 
     return (
       <div className="main">
-        <GraphView graph={workflow.GetGraph()} on_command={this.on_command} />
+        <GraphView graph={workflow.GetGraph()} onCommand={this.onCommand} />
       </div>
     );
   }

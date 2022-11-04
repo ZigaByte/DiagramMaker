@@ -1,11 +1,11 @@
 import Graph from 'model/graph/graph';
-import Node from 'model/graph/node';
 import Position from 'model/graph/position';
 import React from 'react';
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
+import ICommand from 'model/commands/icommand';
+import AddNodeCommand from 'model/commands/add_node_command';
 import NodeView from './node_view';
 
-type GraphViewProps = { graph: Graph };
+type GraphViewProps = { graph: Graph; onCommand: (c: ICommand) => void };
 type GraphViewState = { graph: Graph };
 
 // eslint-disable-next-line react/prefer-stateless-function
@@ -18,10 +18,12 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
   handleClick = (event: React.MouseEvent) => {
     const commandDown = event.metaKey;
     if (commandDown) {
-      const { graph } = this.props;
-      graph.AddNode(
-        new Node(new Position(event.clientX, event.clientY), 'Test')
-      );
+      // const { graph } = this.props;
+      // graph.AddNode(
+      //   new Node()
+      // );
+      const { onCommand } = this.props;
+      onCommand(new AddNodeCommand(new Position(event.clientX, event.clientY)));
     }
     this.setState((previousState) => ({ graph: previousState.graph }));
   };
