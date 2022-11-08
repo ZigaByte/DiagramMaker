@@ -7,4 +7,12 @@ export default class Position {
     this.x = x;
     this.y = y;
   }
+
+  add(pos: Position): Position {
+    return new Position(this.x + pos.x, this.y + pos.y);
+  }
+
+  sub(pos: Position): Position {
+    return new Position(this.x - pos.x, this.y - pos.y);
+  }
 }
