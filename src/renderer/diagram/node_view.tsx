@@ -1,4 +1,5 @@
 import ICommand from 'model/commands/icommand';
+import MoveNodeCommand from 'model/commands/move_node_commnad';
 import SelectNodeCommand from 'model/commands/select_node_command';
 import Node from 'model/graph/node';
 import Position from 'model/graph/position';
@@ -29,7 +30,10 @@ export default class NodeView extends React.Component<
   handleClick = (event: React.MouseEvent) => {
     event.stopPropagation();
     const { node, onCommand } = this.props;
-    onCommand(new SelectNodeCommand(node.id, !node.selected));
+    const { dragged } = this.state;
+    if (!dragged) {
+      onCommand(new SelectNodeCommand(node.id, !node.selected));
+    }
   };
 
   mouseDown = (event: React.MouseEvent) => {
@@ -39,31 +43,36 @@ export default class NodeView extends React.Component<
         dragged: true,
         dragStartPosition: new Position(event.screenX, event.screenY),
       }));
+      event.stopPropagation();
     }
   };
 
   mouseUp = (event: React.MouseEvent) => {
-    const { dragged } = this.state;
+    const { dragged, dragOffset } = this.state;
     if (dragged) {
-      // trigger event with final values
+      const { node, onCommand } = this.props;
+      const newPosition = node.position.add(dragOffset);
+      onCommand(new MoveNodeCommand(node, newPosition));
+
       this.setState((previousState) => ({
         dragged: false,
         dragStartPosition: new Position(0, 0),
         dragOffset: new Position(0, 0),
       }));
+      event.stopPropagation();
     }
   };
 
   mouseMove = (event: React.MouseEvent) => {
     const { dragged, dragStartPosition } = this.state;
     if (dragged) {
-      console.log('dragged');
       const offset = new Position(event.screenX, event.screenY).sub(
         dragStartPosition
       );
       this.setState((previousState) => ({
         dragOffset: offset,
       }));
+      event.stopPropagation();
     }
   };
 
