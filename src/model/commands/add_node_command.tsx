@@ -6,13 +6,21 @@ import ICommand from './icommand';
 export default class AddNodeCommand implements ICommand {
   position: Position;
 
+  node?: Node;
+
   constructor(position: Position) {
     this.position = position;
+    this.node = undefined;
   }
 
   Execute(graph: Graph): void {
-    graph.AddNode(new Node(this.position, 'New Node'));
+    this.node = new Node(this.position, 'New Node');
+    graph.AddNode(this.node);
   }
 
-  Undo(graph: Graph): void {}
+  Undo(graph: Graph): void {
+    if (this.node !== undefined) {
+      graph.RemoveNode(this.node);
+    }
+  }
 }

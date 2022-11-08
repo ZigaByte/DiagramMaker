@@ -3,6 +3,8 @@ import Node from './node';
 export default class Graph {
   nodes: Node[] = [];
 
+  lastId: number = 0;
+
   AddNode(node: Node): void {
     node.id = this.GetNextId();
     this.nodes.push(node);
@@ -21,10 +23,7 @@ export default class Graph {
   }
 
   GetNextId(): number {
-    // Maybe not the best
-    if (this.nodes.length > 0) {
-      return this.nodes[this.nodes.length - 1].id + 1;
-    }
-    return 1;
+    this.lastId += 1;
+    return this.lastId;
   }
 }
