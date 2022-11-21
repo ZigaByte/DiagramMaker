@@ -12,6 +12,10 @@ export default class Workflow {
     command.Execute(this.graph);
   }
 
+  Undo() {}
+
+  Redo() {}
+
   GetGraph(): Graph {
     return this.graph;
   }

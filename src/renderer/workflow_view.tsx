@@ -6,7 +6,7 @@ import ICommand from 'model/commands/icommand';
 import Workflow from 'model/workflow';
 import GraphView from './diagram/graph_view';
 
-type WorkflowProps = unknown;
+type WorkflowProps = { workflow: Workflow };
 type WorkflowState = { workflow: Workflow };
 
 // eslint-disable-next-line react/prefer-stateless-function
@@ -16,14 +16,7 @@ export default class WorkflowView extends React.Component<
 > {
   constructor(props: WorkflowProps) {
     super(props);
-
-    const graph: Graph = new Graph();
-
-    const workflow: Workflow = new Workflow(graph);
-    workflow.Execute(new AddNodeCommand(new Position(100, 100)));
-    workflow.Execute(new AddNodeCommand(new Position(300, 200)));
-    workflow.Execute(new AddNodeCommand(new Position(400, 100)));
-
+    const { workflow } = this.props;
     this.state = { workflow };
   }
 

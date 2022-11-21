@@ -1,6 +1,16 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-export type Channels = 'ipc-example';
+export type MenuCommandUndo = 'menu-undo';
+export type MenuCommandRedo = 'menu-redo';
+
+export type MenuCommandAddNode = 'menu-add-node';
+export type MenuCommandConnect = 'menu-connect';
+
+export type Channels =
+  | MenuCommandUndo
+  | MenuCommandRedo
+  | MenuCommandAddNode
+  | MenuCommandConnect;
 
 contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: {
