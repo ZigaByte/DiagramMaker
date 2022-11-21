@@ -52,12 +52,7 @@ export default class Graph {
     return this.connections;
   }
 
-  ConnectSelectedNodes() {
-    const selectedNodes = this.nodes.filter((n) => n.selected);
-    if (selectedNodes.length === 2) {
-      this.AddConnection(new Connection(selectedNodes[0], selectedNodes[1]));
-    } else {
-      console.log('Only allow connection of 2 nodes');
-    }
+  GetSelectedNodes() {
+    return this.nodes.filter((n) => n.selected);
   }
 }

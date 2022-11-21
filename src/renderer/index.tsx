@@ -1,3 +1,4 @@
+import AddConnectionCommand from 'model/commands/add_connection_command';
 import Connection from 'model/graph/connection';
 import Graph from 'model/graph/graph';
 import Node from 'model/graph/node';
@@ -28,7 +29,11 @@ window.electron.ipcRenderer.on('menu-redo', () => {
 });
 
 window.electron.ipcRenderer.on('menu-connect', () => {
-  console.log('Connect');
-  graph.ConnectSelectedNodes();
-  root.render(<App workflow={workflow} />);
+  const seletedNodes = graph.GetSelectedNodes();
+  if (seletedNodes.length === 2) {
+    workflow.Execute(
+      new AddConnectionCommand(seletedNodes[0], seletedNodes[1])
+    );
+    root.render(<App workflow={workflow} />);
+  }
 });

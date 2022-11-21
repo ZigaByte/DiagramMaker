@@ -118,6 +118,13 @@ export default class MenuBuilder {
             this.mainWindow.webContents.send('menu-connect');
           },
         },
+        {
+          label: 'Delete',
+          accelerator: 'D',
+          click: () => {
+            this.mainWindow.webContents.send('menu-delete');
+          },
+        },
       ],
     };
     const subMenuViewDev: MenuItemConstructorOptions = {
