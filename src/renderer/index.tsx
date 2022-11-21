@@ -17,9 +17,11 @@ root.render(<App workflow={workflow} />);
 window.electron.ipcRenderer.on('menu-undo', () => {
   console.log('Undo');
   workflow.Undo();
+  root.render(<App workflow={workflow} />);
 });
 
 window.electron.ipcRenderer.on('menu-redo', () => {
   console.log('Redo');
   workflow.Redo();
+  root.render(<App workflow={workflow} />);
 });

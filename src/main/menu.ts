@@ -106,7 +106,7 @@ export default class MenuBuilder {
         { type: 'separator' },
         {
           label: 'Add Node',
-          accelerator: 'C',
+          accelerator: 'A',
           click: () => {
             this.mainWindow.webContents.send('menu-add-node');
           },
