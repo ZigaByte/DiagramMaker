@@ -15,4 +15,8 @@ export default class Position {
   sub(pos: Position): Position {
     return new Position(this.x - pos.x, this.y - pos.y);
   }
+
+  absolute(): Position {
+    return new Position(Math.abs(this.x), Math.abs(this.y));
+  }
 }
