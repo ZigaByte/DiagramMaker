@@ -27,7 +27,7 @@ export default class ConnectionView extends React.Component<ConnectionViewProps>
       top: position.y,
       width: size.x,
       height: size.y,
-      boaarder: '1px solid black',
+      border: '1px solid black',
     };
 
     return (

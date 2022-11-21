@@ -1,7 +1,10 @@
 import Node from './node';
+import Connection from './connection';
 
 export default class Graph {
   nodes: Node[] = [];
+
+  connections: Connection[] = [];
 
   lastId: number = 0;
 
@@ -11,6 +14,11 @@ export default class Graph {
   }
 
   RemoveNode(node: Node): void {
+    const connections = this.GetConnectitons(node);
+    connections.forEach((c) => {
+      this.RemoveConnection(c);
+    });
+
     this.nodes = this.nodes.filter((n) => n !== node);
   }
 
@@ -25,5 +33,18 @@ export default class Graph {
   GetNextId(): number {
     this.lastId += 1;
     return this.lastId;
+  }
+
+  AddConnection(connecttion: Connection): void {
+    connecttion.id = this.GetNextId();
+    this.connections.push(connecttion);
+  }
+
+  RemoveConnection(connection: Connection): void {
+    this.connections = this.connections.filter((n) => n !== connection);
+  }
+
+  GetConnectitons(node: Node): Connection[] {
+    return this.connections.filter((c) => c.IsConnected(node));
   }
 }
