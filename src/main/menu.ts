@@ -96,6 +96,7 @@ export default class MenuBuilder {
           label: 'Add Node',
           accelerator: 'Control+A',
           click: () => {
+
             console.log('Control A');
           },
         },
