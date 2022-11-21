@@ -84,6 +84,9 @@ export default class NodeView extends React.Component<
       position: 'absolute',
       left: node.position.x + dragOffset.x,
       top: node.position.y + dragOffset.y,
+      width: 'fit-content',
+      height: 'fit-content',
+      transform: 'translate(-50%, -50%)',
     };
     const isSelected = node.selected;
 

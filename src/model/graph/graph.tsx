@@ -47,4 +47,17 @@ export default class Graph {
   GetConnectitons(node: Node): Connection[] {
     return this.connections.filter((c) => c.IsConnected(node));
   }
+
+  GetAllConnectitons(): Connection[] {
+    return this.connections;
+  }
+
+  ConnectSelectedNodes() {
+    const selectedNodes = this.nodes.filter((n) => n.selected);
+    if (selectedNodes.length === 2) {
+      this.AddConnection(new Connection(selectedNodes[0], selectedNodes[1]));
+    } else {
+      console.log('Only allow connection of 2 nodes');
+    }
+  }
 }
