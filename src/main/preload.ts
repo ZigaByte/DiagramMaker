@@ -5,12 +5,14 @@ export type MenuCommandRedo = 'menu-redo';
 
 export type MenuCommandAddNode = 'menu-add-node';
 export type MenuCommandConnect = 'menu-connect';
+export type MenuCommandDelete = 'menu-delete';
 
 export type Channels =
   | MenuCommandUndo
   | MenuCommandRedo
   | MenuCommandAddNode
-  | MenuCommandConnect;
+  | MenuCommandConnect
+  | MenuCommandDelete;
 
 contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: {

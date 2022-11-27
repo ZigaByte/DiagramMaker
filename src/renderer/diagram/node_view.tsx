@@ -31,8 +31,8 @@ export default class NodeView extends React.Component<
     event.stopPropagation();
     const { node, onCommand } = this.props;
     const { dragged } = this.state;
-    if (!dragged) {
-      onCommand(new SelectNodeCommand(node.id, !node.selected));
+    if (!dragged && !node.selected) {
+      onCommand(new SelectNodeCommand(node.id, true));
     }
   };
 

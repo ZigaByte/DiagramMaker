@@ -1,4 +1,5 @@
 import AddConnectionCommand from 'model/commands/add_connection_command';
+import RemoveNodeCommand from 'model/commands/remove_node_command';
 import Connection from 'model/graph/connection';
 import Graph from 'model/graph/graph';
 import Node from 'model/graph/node';
@@ -34,6 +35,16 @@ window.electron.ipcRenderer.on('menu-connect', () => {
     workflow.Execute(
       new AddConnectionCommand(seletedNodes[0], seletedNodes[1])
     );
+    root.render(<App workflow={workflow} />);
+  }
+});
+
+window.electron.ipcRenderer.on('menu-delete', () => {
+  const seletedNodes = graph.GetSelectedNodes();
+  if (seletedNodes.length > 0) {
+    seletedNodes.forEach((element) => {
+      workflow.Execute(new RemoveNodeCommand(element));
+    });
     root.render(<App workflow={workflow} />);
   }
 });
