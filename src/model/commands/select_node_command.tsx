@@ -4,24 +4,21 @@ import ICommand from './icommand';
 export default class SelectNodeCommand implements ICommand {
   nodeId: number;
 
-  select: boolean;
-
-  constructor(nodeId: number, select: boolean) {
+  constructor(nodeId: number) {
     this.nodeId = nodeId;
-    this.select = select;
   }
 
   Execute(graph: Graph): void {
     const node = graph.GetNode(this.nodeId);
     if (node !== undefined) {
-      node.selected = this.select;
+      graph.selection.Add(node);
     }
   }
 
   Undo(graph: Graph): void {
     const node = graph.GetNode(this.nodeId);
     if (node !== undefined) {
-      node.selected = !this.select;
+      graph.selection.Remove(node);
     }
   }
 }

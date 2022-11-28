@@ -5,8 +5,12 @@ import ICommand from 'model/commands/icommand';
 import AddNodeCommand from 'model/commands/add_node_command';
 import NodeView from './node_view';
 import ConnectionView from './connection_view';
+import DeselectAllCommand from 'model/commands/deselect_all_command';
 
-type GraphViewProps = { graph: Graph; onCommand: (c: ICommand) => void };
+type GraphViewProps = {
+  graph: Graph;
+  onCommand: (c: ICommand) => void;
+};
 type GraphViewState = { graph: Graph };
 
 // eslint-disable-next-line react/prefer-stateless-function
@@ -18,9 +22,12 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
 
   handleClick = (event: React.MouseEvent) => {
     const commandDown = event.metaKey;
+    const { onCommand } = this.props;
+
     if (commandDown) {
-      const { onCommand } = this.props;
       onCommand(new AddNodeCommand(new Position(event.clientX, event.clientY)));
+    } else {
+      onCommand(new DeselectAllCommand());
     }
     // this.setState((previousState) => ({ graph: previousState.graph }));
     event.stopPropagation();
@@ -28,7 +35,7 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
 
   render() {
     const { graph } = this.state;
-    const { onCommand } = this.props;
+    const { selection, onCommand } = this.props;
     return (
       <div
         onClick={this.handleClick}
@@ -46,7 +53,12 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
           <ConnectionView key={connection.id} connection={connection} />
         ))}
         {graph.GetNodes().map((node, i) => (
-          <NodeView key={node.id} node={node} onCommand={onCommand} />
+          <NodeView
+            key={node.id}
+            node={node}
+            selection={selection}
+            onCommand={onCommand}
+          />
         ))}
       </div>
     );

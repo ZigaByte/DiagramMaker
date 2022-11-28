@@ -10,7 +10,7 @@ export default class AddNodeCommand implements ICommand {
 
   constructor(position: Position) {
     this.position = position;
-    this.node = new Node(this.position, 'New Node');
+    this.node = new Node(-1, this.position, 'New Node', false);
   }
 
   Execute(graph: Graph): void {

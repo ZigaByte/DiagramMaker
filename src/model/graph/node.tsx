@@ -7,10 +7,17 @@ export default class Node {
 
   text: string;
 
-  selected: boolean = false;
+  selected?: boolean;
 
-  constructor(position: Position, text: string) {
+  constructor(
+    id: number,
+    position: Position,
+    text: string,
+    selected?: boolean
+  ) {
+    this.id = id;
     this.position = position;
     this.text = text;
+    this.selected = selected;
   }
 }

@@ -1,5 +1,6 @@
 import ICommand from './commands/icommand';
 import Graph from './graph/graph';
+import Selection from './selection/selection';
 
 export default class Workflow {
   graph: Graph;
@@ -36,5 +37,9 @@ export default class Workflow {
 
   GetGraph(): Graph {
     return this.graph;
+  }
+
+  GetSelection(): Selection {
+    return this.selection;
   }
 }

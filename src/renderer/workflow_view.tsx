@@ -1,7 +1,4 @@
 import React from 'react';
-import Graph from 'model/graph/graph';
-import Position from 'model/graph/position';
-import AddNodeCommand from 'model/commands/add_node_command';
 import ICommand from 'model/commands/icommand';
 import Workflow from 'model/workflow';
 import GraphView from './diagram/graph_view';

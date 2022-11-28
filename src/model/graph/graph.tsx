@@ -1,7 +1,10 @@
+import Selection from 'model/selection/selection';
 import Node from './node';
 import Connection from './connection';
 
 export default class Graph {
+  selection: Selection = new Selection();
+
   nodes: Node[] = [];
 
   connections: Connection[] = [];
@@ -23,10 +26,13 @@ export default class Graph {
   }
 
   GetNodes(): Node[] {
-    return this.nodes;
+    return this.nodes.map(
+      (n) => new Node(n.id, n.position, n.text, this.selection.IsSelected(n))
+    );
   }
 
   GetNode(id: number): Node | undefined {
+    // TODO: This should present the current position, combined with the selection offsets.
     return this.nodes.find((node) => node.id === id);
   }
 

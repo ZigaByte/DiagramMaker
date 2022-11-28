@@ -6,7 +6,10 @@ import Position from 'model/graph/position';
 import React from 'react';
 import './node_view.css';
 
-type NodeViewProps = { node: Node; onCommand: (c: ICommand) => void };
+type NodeViewProps = {
+  node: Node;
+  onCommand: (c: ICommand) => void;
+};
 type NodeViewState = {
   dragged: boolean;
   dragStartPosition: Position;
@@ -32,7 +35,7 @@ export default class NodeView extends React.Component<
     const { node, onCommand } = this.props;
     const { dragged } = this.state;
     if (!dragged && !node.selected) {
-      onCommand(new SelectNodeCommand(node.id, true));
+      onCommand(new SelectNodeCommand(node.id));
     }
   };
 
