@@ -32,4 +32,11 @@ export default class Selection {
   GetNodes(): Node[] {
     return this.selectedNodes;
   }
+
+  GetOffset(node: Node): Position {
+    if (this.IsSelected(node)) {
+      return this.offset;
+    }
+    return new Position(0, 0);
+  }
 }

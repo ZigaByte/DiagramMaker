@@ -30,7 +30,7 @@ window.electron.ipcRenderer.on('menu-redo', () => {
 });
 
 window.electron.ipcRenderer.on('menu-connect', () => {
-  const seletedNodes = graph.GetSelectedNodes();
+  const seletedNodes = graph.selection.GetNodes();
   if (seletedNodes.length === 2) {
     workflow.Execute(
       new AddConnectionCommand(seletedNodes[0], seletedNodes[1])
@@ -40,7 +40,7 @@ window.electron.ipcRenderer.on('menu-connect', () => {
 });
 
 window.electron.ipcRenderer.on('menu-delete', () => {
-  const seletedNodes = graph.GetSelectedNodes();
+  const seletedNodes = graph.selection.GetNodes();
   if (seletedNodes.length > 0) {
     seletedNodes.forEach((element) => {
       workflow.Execute(new RemoveNodeCommand(element));

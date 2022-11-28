@@ -27,7 +27,13 @@ export default class Graph {
 
   GetNodes(): Node[] {
     return this.nodes.map(
-      (n) => new Node(n.id, n.position, n.text, this.selection.IsSelected(n))
+      (n) =>
+        new Node(
+          n.id,
+          n.position.add(this.selection.GetOffset(n)),
+          n.text,
+          this.selection.IsSelected(n)
+        )
     );
   }
 
@@ -56,9 +62,5 @@ export default class Graph {
 
   GetAllConnectitons(): Connection[] {
     return this.connections;
-  }
-
-  GetSelectedNodes() {
-    return this.nodes.filter((n) => n.selected);
   }
 }
