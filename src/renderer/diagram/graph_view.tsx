@@ -6,6 +6,7 @@ import AddNodeCommand from 'model/commands/add_node_command';
 import NodeView from './node_view';
 import ConnectionView from './connection_view';
 import DeselectAllCommand from 'model/commands/deselect_all_command';
+import DragSelectionCommand from 'model/commands/drag_selection_command';
 
 type GraphViewProps = {
   graph: Graph;
@@ -33,12 +34,22 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
     event.stopPropagation();
   };
 
+  mouseMove = (event: React.MouseEvent) => {
+    console.log("Graph Move");
+
+    const { onCommand } = this.props;
+    onCommand(
+      new DragSelectionCommand(new Position(event.movementX, event.movementY))
+    );
+  };
+
   render() {
     const { graph } = this.state;
-    const { selection, onCommand } = this.props;
+    const { onCommand } = this.props;
     return (
       <div
         onClick={this.handleClick}
+        onMouseMove={this.mouseMove}
         onKeyDown={() => {}}
         tabIndex={0}
         role="button"
@@ -53,12 +64,7 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
           <ConnectionView key={connection.id} connection={connection} />
         ))}
         {graph.GetNodes().map((node, i) => (
-          <NodeView
-            key={node.id}
-            node={node}
-            selection={selection}
-            onCommand={onCommand}
-          />
+          <NodeView key={node.id} node={node} onCommand={onCommand} />
         ))}
       </div>
     );

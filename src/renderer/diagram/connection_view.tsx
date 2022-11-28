@@ -5,7 +5,6 @@ import Node from 'model/graph/node';
 import Connection from 'model/graph/connection';
 import Position from 'model/graph/position';
 import React from 'react';
-import './node_view.css';
 
 type ConnectionViewProps = {
   connection: Connection;

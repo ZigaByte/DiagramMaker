@@ -26,6 +26,7 @@ export default class Graph {
   }
 
   GetNodes(): Node[] {
+    console.log(this.selection.GetOffset(this.nodes[0]));
     return this.nodes.map(
       (n) =>
         new Node(

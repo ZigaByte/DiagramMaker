@@ -6,6 +6,8 @@ export default class Selection {
 
   offset: Position = new Position(0, 0);
 
+  dragging: boolean = false;
+
   IsSelected(node: Node): boolean {
     return this.selectedNodes.includes(node);
   }
@@ -38,5 +40,13 @@ export default class Selection {
       return this.offset;
     }
     return new Position(0, 0);
+  }
+
+  StartDragging() {
+    this.dragging = true;
+  }
+
+  StopDragging() {
+    this.dragging = false;
   }
 }

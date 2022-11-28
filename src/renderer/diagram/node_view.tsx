@@ -1,19 +1,21 @@
+import DragSelectionCommand from 'model/commands/drag_selection_command';
 import ICommand from 'model/commands/icommand';
 import MoveNodeCommand from 'model/commands/move_node_commnad';
 import SelectNodeCommand from 'model/commands/select_node_command';
+import SetDraggingCommand from 'model/commands/set_dragging_command';
 import Node from 'model/graph/node';
 import Position from 'model/graph/position';
 import React from 'react';
-import './node_view.css';
+import './node_style.css';
 
 type NodeViewProps = {
   node: Node;
   onCommand: (c: ICommand) => void;
 };
 type NodeViewState = {
-  dragged: boolean;
-  dragStartPosition: Position;
-  dragOffset: Position;
+  // dragged: boolean;
+  // dragStartPosition: Position;
+  // dragOffset: Position;
 };
 
 // eslint-disable-next-line react/prefer-stateless-function
@@ -21,72 +23,48 @@ export default class NodeView extends React.Component<
   NodeViewProps,
   NodeViewState
 > {
-  constructor(props: NodeViewProps) {
-    super(props);
-    this.state = {
-      dragged: false,
-      dragStartPosition: new Position(0, 0),
-      dragOffset: new Position(0, 0),
-    };
-  }
-
   handleClick = (event: React.MouseEvent) => {
+    console.log('Node Click');
+
     event.stopPropagation();
     const { node, onCommand } = this.props;
-    const { dragged } = this.state;
-    if (!dragged && !node.selected) {
+    if (!node.selected) {
       onCommand(new SelectNodeCommand(node.id));
     }
   };
 
   mouseDown = (event: React.MouseEvent) => {
-    const { node } = this.props;
+    console.log('Node Down');
+    const { node, onCommand } = this.props;
     if (node.selected) {
-      this.setState((previousState) => ({
-        dragged: true,
-        dragStartPosition: new Position(event.screenX, event.screenY),
-      }));
+      onCommand(new SetDraggingCommand(true));
       event.stopPropagation();
     }
   };
 
   mouseUp = (event: React.MouseEvent) => {
-    const { dragged, dragOffset } = this.state;
-    if (dragged) {
-      const { node, onCommand } = this.props;
-      const newPosition = node.position.add(dragOffset);
-      onCommand(new MoveNodeCommand(node, newPosition));
-
-      this.setState((previousState) => ({
-        dragged: false,
-        dragStartPosition: new Position(0, 0),
-        dragOffset: new Position(0, 0),
-      }));
-      event.stopPropagation();
-    }
+    console.log('Node Down');
+    const { onCommand } = this.props;
+    onCommand(new SetDraggingCommand(false));
+    event.stopPropagation();
   };
 
   mouseMove = (event: React.MouseEvent) => {
-    const { dragged, dragStartPosition } = this.state;
-    if (dragged) {
-      const offset = new Position(event.screenX, event.screenY).sub(
-        dragStartPosition
-      );
-      this.setState((previousState) => ({
-        dragOffset: offset,
-      }));
-      event.stopPropagation();
-    }
+    console.log('Node Move ' + event.movementX + ' . ' + event.movementY);
+    const { onCommand } = this.props;
+    onCommand(
+      new DragSelectionCommand(new Position(event.movementX, event.movementY))
+    );
+    event.stopPropagation();
   };
 
   render() {
     const { node } = this.props;
-    const { dragOffset } = this.state;
 
     const style = {
       position: 'absolute',
-      left: node.position.x + dragOffset.x,
-      top: node.position.y + dragOffset.y,
+      left: node.position.x,
+      top: node.position.y,
       width: 'fit-content',
       height: 'fit-content',
       transform: 'translate(-50%, -50%)',
