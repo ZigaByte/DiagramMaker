@@ -13,7 +13,7 @@ export default class AddConnectionCommand implements ICommand {
   constructor(node1: Node, node2: Node) {
     this.node1 = node1;
     this.node2 = node2;
-    this.connection = new Connection(node1, node2);
+    this.connection = new Connection(-1, node1, node2);
   }
 
   Execute(graph: Graph): void {

@@ -14,7 +14,7 @@ const root = createRoot(container);
 const graph = new Graph();
 graph.AddNode(new Node(-1, new Position(100, 100), 'Hello', false));
 graph.AddNode(new Node(-1, new Position(300, 300), 'Aloha', false));
-graph.AddConnection(new Connection(graph.nodes[0], graph.nodes[1]));
+graph.AddConnection(new Connection(-1, graph.nodes[0], graph.nodes[1]));
 const workflow = new Workflow(graph);
 
 root.render(<App workflow={workflow} />);

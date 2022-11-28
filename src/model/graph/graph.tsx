@@ -25,19 +25,6 @@ export default class Graph {
     this.nodes = this.nodes.filter((n) => n !== node);
   }
 
-  GetNodes(): Node[] {
-    console.log(this.selection.GetOffset(this.nodes[0]));
-    return this.nodes.map(
-      (n) =>
-        new Node(
-          n.id,
-          n.position.add(this.selection.GetOffset(n)),
-          n.text,
-          this.selection.IsSelected(n)
-        )
-    );
-  }
-
   GetNode(id: number): Node | undefined {
     // TODO: This should present the current position, combined with the selection offsets.
     return this.nodes.find((node) => node.id === id);
@@ -61,7 +48,28 @@ export default class Graph {
     return this.connections.filter((c) => c.IsConnected(node));
   }
 
-  GetAllConnectitons(): Connection[] {
-    return this.connections;
+  GetDisplayNode(node: Node): Node {
+    return new Node(
+      node.id,
+      node.position.add(this.selection.GetOffset(node)),
+      node.text,
+      this.selection.IsSelected(node)
+    );
+  }
+
+  GetDisplayConnection(connection: Connection): Connection {
+    return new Connection(
+      connection.id,
+      this.GetDisplayNode(connection.node1),
+      this.GetDisplayNode(connection.node2)
+    );
+  }
+
+  GetDisplayConnections(): Connection[] {
+    return this.connections.map((c) => this.GetDisplayConnection(c));
+  }
+
+  GetDisplayNodes(): Node[] {
+    return this.nodes.map((n) => this.GetDisplayNode(n));
   }
 }

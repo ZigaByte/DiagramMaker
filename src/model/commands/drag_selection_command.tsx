@@ -12,6 +12,8 @@ export default class DragSelectionCommand implements ICommand {
     this.previousPosition = undefined;
   }
 
+  // TODO: Make this additive
+
   Execute(graph: Graph): void {
     if (graph.selection.dragging) {
       this.previousPosition = graph.selection.offset;

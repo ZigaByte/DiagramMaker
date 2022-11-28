@@ -35,8 +35,7 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
   };
 
   mouseMove = (event: React.MouseEvent) => {
-    console.log("Graph Move");
-
+    // console.log("Graph Move");
     const { onCommand } = this.props;
     onCommand(
       new DragSelectionCommand(new Position(event.movementX, event.movementY))
@@ -60,10 +59,10 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
           height: '100%',
         }}
       >
-        {graph.GetAllConnectitons().map((connection, i) => (
+        {graph.GetDisplayConnections().map((connection, i) => (
           <ConnectionView key={connection.id} connection={connection} />
         ))}
-        {graph.GetNodes().map((node, i) => (
+        {graph.GetDisplayNodes().map((node, i) => (
           <NodeView key={node.id} node={node} onCommand={onCommand} />
         ))}
       </div>

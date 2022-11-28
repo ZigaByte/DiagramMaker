@@ -7,11 +7,11 @@ export default class Connection {
 
   node2: Node;
 
-  constructor(node1: Node, node2: Node) {
+  constructor(id: number, node1: Node, node2: Node) {
     // assert(node1 !== node2, 'Cannot connect to self');
     // assert(node1 !== undefined, 'Node1 undefined');
     // assert(node2 !== undefined, 'Node2 undefined');
-
+    this.id = id;
     this.node1 = node1;
     this.node2 = node2;
   }
