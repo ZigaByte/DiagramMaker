@@ -22,4 +22,12 @@ export default class RemoveNodeCommand implements ICommand {
     graph.AddNode(this.node);
     this.connections?.forEach((c) => graph.AddConnection(c));
   }
+
+  Combine = (additive: ICommand): ICommand => {
+    return this;
+  };
+
+  CanCombine = (additive: ICommand): boolean => {
+    return false;
+  };
 }

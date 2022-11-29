@@ -13,4 +13,12 @@ export default class DeselectAllCommand implements ICommand {
   Undo(graph: Graph): void {
     graph.selection.SetSelection(this.selectedNodes);
   }
+
+  Combine = (additive: ICommand): ICommand => {
+    return this;
+  };
+
+  CanCombine = (additive: ICommand): boolean => {
+    return false;
+  };
 }

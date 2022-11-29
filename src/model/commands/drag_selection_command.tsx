@@ -24,7 +24,7 @@ export default class DragSelectionCommand implements ICommand, IAdditive {
     graph.selection.offset = this.previousPosition!;
   }
 
-  Add(additive: IAdditive): IAdditive {
+  Combine = (additive: ICommand): ICommand => {
     if (additive instanceof DragSelectionCommand) {
       const newCommand = new DragSelectionCommand(
         this.offset.add(additive.offset)
@@ -33,5 +33,9 @@ export default class DragSelectionCommand implements ICommand, IAdditive {
       return newCommand;
     }
     return this;
-  }
+  };
+
+  CanCombine = (additive: ICommand): boolean => {
+    return additive instanceof DragSelectionCommand;
+  };
 }

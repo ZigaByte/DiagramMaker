@@ -21,4 +21,12 @@ export default class SelectNodeCommand implements ICommand {
       graph.selection.Remove(node);
     }
   }
+
+  Combine = (additive: ICommand): ICommand => {
+    return this;
+  };
+
+  CanCombine = (additive: ICommand): boolean => {
+    return false;
+  };
 }

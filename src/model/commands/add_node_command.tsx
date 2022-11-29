@@ -20,4 +20,12 @@ export default class AddNodeCommand implements ICommand {
   Undo(graph: Graph): void {
     graph.RemoveNode(this.node);
   }
+
+  Combine = (additive: ICommand): ICommand => {
+    return this;
+  };
+
+  CanCombine = (additive: ICommand): boolean => {
+    return false;
+  };
 }

@@ -19,8 +19,9 @@ export default class Workflow {
 
     if (this.commnadHistory.length > 0) {
       const lastCommand = this.commnadHistory[this.commnadHistory.length - 1];
-      if ('Add' in lastCommand) {
-        lastCommand.Add(command);
+      if (command.CanCombine(lastCommand)) {
+        this.commnadHistory[this.commnadHistory.length - 1] =
+          lastCommand.Combine(command);
       }
     }
 

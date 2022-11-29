@@ -24,11 +24,11 @@ export default class AddConnectionCommand implements ICommand {
     graph.RemoveConnection(this.connection);
   }
 
-  Combine(additive: ICommand): ICommand {
+  Combine = (additive: ICommand): ICommand => {
     return this;
-  }
+  };
 
-  CanCombine(additive: ICommand): boolean {
+  CanCombine = (additive: ICommand): boolean => {
     return false;
-  }
+  };
 }

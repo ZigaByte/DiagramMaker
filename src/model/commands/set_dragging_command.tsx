@@ -23,4 +23,12 @@ export default class SetDraggingCommand implements ICommand {
   Undo(graph: Graph): void {
     graph.selection.dragging = !this.dragging;
   }
+
+  Combine = (additive: ICommand): ICommand => {
+    return this;
+  };
+
+  CanCombine = (additive: ICommand): boolean => {
+    return false;
+  };
 }
