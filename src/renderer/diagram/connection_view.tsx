@@ -1,18 +1,16 @@
-import ICommand from 'model/commands/icommand';
-import MoveNodeCommand from 'model/commands/move_node_commnad';
-import SelectNodeCommand from 'model/commands/select_node_command';
-import Node from 'model/graph/node';
 import Connection from 'model/graph/connection';
-import Position from 'model/graph/position';
 import React from 'react';
 
 type ConnectionViewProps = {
   connection: Connection;
 };
-// type ConnectionViewState = Any;
+type ConnectionViewState = {};
 
 // eslint-disable-next-line react/prefer-stateless-function
-export default class ConnectionView extends React.Component<ConnectionViewProps> {
+export default class ConnectionView extends React.Component<
+  ConnectionViewProps,
+  ConnectionViewState
+> {
   render() {
     const { connection } = this.props;
     const nodes = connection.GetNodes();

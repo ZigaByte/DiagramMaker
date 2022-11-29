@@ -1,6 +1,5 @@
 import DragSelectionCommand from 'model/commands/drag_selection_command';
 import ICommand from 'model/commands/icommand';
-import MoveNodeCommand from 'model/commands/move_node_commnad';
 import SelectNodeCommand from 'model/commands/select_node_command';
 import SetDraggingCommand from 'model/commands/set_dragging_command';
 import Node from 'model/graph/node';
@@ -12,11 +11,7 @@ type NodeViewProps = {
   node: Node;
   onCommand: (c: ICommand) => void;
 };
-type NodeViewState = {
-  // dragged: boolean;
-  // dragStartPosition: Position;
-  // dragOffset: Position;
-};
+type NodeViewState = {};
 
 // eslint-disable-next-line react/prefer-stateless-function
 export default class NodeView extends React.Component<

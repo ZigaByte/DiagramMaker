@@ -23,4 +23,12 @@ export default class AddConnectionCommand implements ICommand {
   Undo(graph: Graph): void {
     graph.RemoveConnection(this.connection);
   }
+
+  Combine(additive: ICommand): ICommand {
+    return this;
+  }
+
+  CanCombine(additive: ICommand): boolean {
+    return false;
+  }
 }

@@ -1,4 +1,5 @@
 import ICommand from './commands/icommand';
+import IAdditive from './commands/iadditive';
 import Graph from './graph/graph';
 import Selection from './selection/selection';
 
@@ -15,6 +16,14 @@ export default class Workflow {
 
   Execute(command: ICommand) {
     command.Execute(this.graph);
+
+    if (this.commnadHistory.length > 0) {
+      const lastCommand = this.commnadHistory[this.commnadHistory.length - 1];
+      if ('Add' in lastCommand) {
+        lastCommand.Add(command);
+      }
+    }
+
     this.commnadHistory.push(command);
     this.undoneCommands = [];
   }
@@ -37,9 +46,5 @@ export default class Workflow {
 
   GetGraph(): Graph {
     return this.graph;
-  }
-
-  GetSelection(): Selection {
-    return this.selection;
   }
 }

@@ -1,8 +1,9 @@
 import Position from 'model/graph/position';
 import Graph from 'model/graph/graph';
 import ICommand from './icommand';
+import IAdditive from './iadditive';
 
-export default class DragSelectionCommand implements ICommand {
+export default class DragSelectionCommand implements ICommand, IAdditive {
   offset: Position;
 
   previousPosition?: Position;
@@ -11,8 +12,6 @@ export default class DragSelectionCommand implements ICommand {
     this.offset = offset;
     this.previousPosition = undefined;
   }
-
-  // TODO: Make this additive
 
   Execute(graph: Graph): void {
     if (graph.selection.dragging) {
@@ -23,5 +22,16 @@ export default class DragSelectionCommand implements ICommand {
 
   Undo(graph: Graph): void {
     graph.selection.offset = this.previousPosition!;
+  }
+
+  Add(additive: IAdditive): IAdditive {
+    if (additive instanceof DragSelectionCommand) {
+      const newCommand = new DragSelectionCommand(
+        this.offset.add(additive.offset)
+      );
+      newCommand.previousPosition = this.previousPosition;
+      return newCommand;
+    }
+    return this;
   }
 }
