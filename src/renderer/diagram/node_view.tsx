@@ -38,18 +38,22 @@ export default class NodeView extends React.Component<
 
   mouseUp = (event: React.MouseEvent) => {
     // console.log('Node Down');
-    const { onCommand } = this.props;
-    onCommand(new SetDraggingCommand(false));
-    event.stopPropagation();
+    const { node, onCommand } = this.props;
+    if (node.selected) {
+      onCommand(new SetDraggingCommand(false));
+      event.stopPropagation();
+    }
   };
 
   mouseMove = (event: React.MouseEvent) => {
     // console.log('Node Move ' + event.movementX + ' . ' + event.movementY);
-    const { onCommand } = this.props;
-    onCommand(
-      new DragSelectionCommand(new Position(event.movementX, event.movementY))
-    );
-    event.stopPropagation();
+    const { node, onCommand } = this.props;
+    if (node.dragging) {
+      onCommand(
+        new DragSelectionCommand(new Position(event.movementX, event.movementY))
+      );
+      event.stopPropagation();
+    }
   };
 
   render() {

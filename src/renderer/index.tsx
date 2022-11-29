@@ -12,8 +12,8 @@ const container = document.getElementById('root')!;
 const root = createRoot(container);
 
 const graph = new Graph();
-graph.AddNode(new Node(-1, new Position(100, 100), 'Hello', false));
-graph.AddNode(new Node(-1, new Position(300, 300), 'Aloha', false));
+graph.AddNode(new Node(-1, new Position(100, 100), 'Hello'));
+graph.AddNode(new Node(-1, new Position(300, 300), 'Aloha'));
 graph.AddConnection(new Connection(-1, graph.nodes[0], graph.nodes[1]));
 const workflow = new Workflow(graph);
 

@@ -231,7 +231,6 @@ export default class MenuBuilder {
         ],
       },
     ];
-
     return templateDefault;
   }
 }

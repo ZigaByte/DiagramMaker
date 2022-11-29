@@ -35,11 +35,13 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
   };
 
   mouseMove = (event: React.MouseEvent) => {
-    // console.log("Graph Move");
+    const { graph } = this.state;
     const { onCommand } = this.props;
-    onCommand(
-      new DragSelectionCommand(new Position(event.movementX, event.movementY))
-    );
+    if (graph.selection.dragging) {
+      onCommand(
+        new DragSelectionCommand(new Position(event.movementX, event.movementY))
+      );
+    }
   };
 
   render() {

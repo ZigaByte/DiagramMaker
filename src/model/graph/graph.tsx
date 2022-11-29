@@ -49,12 +49,14 @@ export default class Graph {
   }
 
   GetDisplayNode(node: Node): Node {
-    return new Node(
+    const displayNode = new Node(
       node.id,
       node.position.add(this.selection.GetOffset(node)),
-      node.text,
-      this.selection.IsSelected(node)
+      node.text
     );
+    displayNode.selected = this.selection.IsSelected(node);
+    displayNode.dragging = displayNode.selected && this.selection.dragging;
+    return displayNode;
   }
 
   GetDisplayConnection(connection: Connection): Connection {

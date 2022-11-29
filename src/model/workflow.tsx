@@ -1,7 +1,5 @@
 import ICommand from './commands/icommand';
-import IAdditive from './commands/iadditive';
 import Graph from './graph/graph';
-import Selection from './selection/selection';
 
 export default class Workflow {
   graph: Graph;
@@ -19,14 +17,18 @@ export default class Workflow {
 
     if (this.commnadHistory.length > 0) {
       const lastCommand = this.commnadHistory[this.commnadHistory.length - 1];
-      if (command.CanCombine(lastCommand)) {
+      if (lastCommand.CanCombine(command)) {
         this.commnadHistory[this.commnadHistory.length - 1] =
           lastCommand.Combine(command);
+      } else {
+        this.commnadHistory.push(command);
       }
+    } else {
+      this.commnadHistory.push(command);
     }
-
-    this.commnadHistory.push(command);
     this.undoneCommands = [];
+
+    console.log(this.commnadHistory);
   }
 
   Undo() {
@@ -35,6 +37,7 @@ export default class Workflow {
       lastCommand.Undo(this.graph);
       this.undoneCommands.push(lastCommand);
     }
+    console.log(this.commnadHistory);
   }
 
   Redo() {

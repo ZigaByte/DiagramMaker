@@ -9,15 +9,15 @@ export default class Node {
 
   selected?: boolean;
 
+  dragging?: boolean;
+
   constructor(
     id: number,
     position: Position,
     text: string,
-    selected?: boolean
   ) {
     this.id = id;
     this.position = position;
     this.text = text;
-    this.selected = selected;
   }
 }

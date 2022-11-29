@@ -1,7 +1,6 @@
 import Position from 'model/graph/position';
 import Graph from 'model/graph/graph';
 import ICommand from './icommand';
-import IAdditive from './iadditive';
 
 export default class DragSelectionCommand implements ICommand, IAdditive {
   offset: Position;
@@ -24,18 +23,22 @@ export default class DragSelectionCommand implements ICommand, IAdditive {
     graph.selection.offset = this.previousPosition!;
   }
 
-  Combine = (additive: ICommand): ICommand => {
-    if (additive instanceof DragSelectionCommand) {
+  Combine = (command: ICommand): ICommand => {
+    console.log(this);
+    console.log(command);
+    if (command instanceof DragSelectionCommand) {
       const newCommand = new DragSelectionCommand(
-        this.offset.add(additive.offset)
+        this.offset.add(command.offset)
       );
       newCommand.previousPosition = this.previousPosition;
+      console.log(newCommand);
       return newCommand;
     }
     return this;
   };
 
-  CanCombine = (additive: ICommand): boolean => {
-    return additive instanceof DragSelectionCommand;
+  CanCombine = (command: ICommand): boolean => {
+    console.log(command instanceof DragSelectionCommand);
+    return command instanceof DragSelectionCommand;
   };
 }
