@@ -22,7 +22,7 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
   }
 
   handleClick = (event: React.MouseEvent) => {
-    const commandDown = event.metaKey;
+    const commandDown = event.metaKey || event.ctrlKey;
     const { onCommand } = this.props;
 
     if (commandDown) {
