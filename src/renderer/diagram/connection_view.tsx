@@ -26,21 +26,21 @@ export default class ConnectionView extends React.Component<
       width: size.x,
       height: size.y,
       borderRadius: '20px',
-      borderBottom: '0px solid white',
-      borderLeft: '0px solid white',
-      borderRight: '0px solid white',
-      borderTop: '0px solid white',
+      borderBottom: '0px solid #888',
+      borderLeft: '0px solid #888',
+      borderRight: '0px solid #888',
+      borderTop: '0px solid #888',
     };
     if (position1.x > position2.x) {
-      style.borderRight = '3px solid white';
+      style.borderRight = '3px solid #888';
     } else {
-      style.borderLeft = '3px solid white';
+      style.borderLeft = '3px solid #888';
     }
 
     if (position1.y > position2.y) {
-      style.borderTop = '3px solid white';
+      style.borderTop = '3px solid #888';
     } else {
-      style.borderBottom = '3px solid white';
+      style.borderBottom = '3px solid #888';
     }
 
     return <div style={style} />;

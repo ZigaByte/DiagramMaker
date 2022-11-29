@@ -5,6 +5,7 @@
   background-color: white;
   color: black;
   user-select: none;
+  border: 3px solid #888;
 }
 
 .node:hover {
@@ -12,5 +13,5 @@
 }
 
 .selected {
-  border: 3px solid red;
+  border: 3px solid #cc0000;
 }
