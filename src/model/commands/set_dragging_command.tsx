@@ -43,4 +43,8 @@ export default class SetDraggingCommand implements ICommand {
   StopsUndo = (): boolean => {
     return this.dragging;
   };
+
+  StopsRedo = (): boolean => {
+    return !this.dragging;
+  };
 }

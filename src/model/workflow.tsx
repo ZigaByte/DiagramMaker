@@ -27,8 +27,6 @@ export default class Workflow {
       this.commnadHistory.push(command);
     }
     this.undoneCommands = [];
-
-    console.log(this.commnadHistory);
   }
 
   Undo() {
@@ -44,16 +42,23 @@ export default class Workflow {
         lastCommand = this.commnadHistory.pop();
       }
     }
-
     console.log(this.commnadHistory);
   }
 
   Redo() {
-    const lastCommand = this.undoneCommands.pop();
-    if (lastCommand !== undefined) {
+    let lastCommand = this.undoneCommands.pop();
+    let stopsUndo = false;
+    while (lastCommand !== undefined && !stopsUndo) {
+      stopsUndo = lastCommand.StopsRedo();
+
       lastCommand.Execute(this.graph);
       this.commnadHistory.push(lastCommand);
+
+      if (!stopsUndo) {
+        lastCommand = this.undoneCommands.pop();
+      }
     }
+    console.log(this.commnadHistory);
   }
 
   GetGraph(): Graph {

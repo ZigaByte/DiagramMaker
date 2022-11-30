@@ -36,4 +36,8 @@ export default class DragSelectionCommand implements ICommand {
   StopsUndo = (): boolean => {
     return false;
   };
+
+  StopsRedo = (): boolean => {
+    return false;
+  };
 }

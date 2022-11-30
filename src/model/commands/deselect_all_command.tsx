@@ -25,4 +25,8 @@ export default class DeselectAllCommand implements ICommand {
   StopsUndo = (): boolean => {
     return true;
   };
+
+  StopsRedo = (): boolean => {
+    return true;
+  };
 }

@@ -8,4 +8,5 @@ export default interface ICommand {
   Execute(graph: Graph): void;
   Undo(graph: Graph): void;
   StopsUndo(): boolean;
+  StopsRedo(): boolean;
 }

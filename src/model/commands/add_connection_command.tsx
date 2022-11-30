@@ -35,4 +35,8 @@ export default class AddConnectionCommand implements ICommand {
   StopsUndo = (): boolean => {
     return true;
   };
+
+  StopsRedo = (): boolean => {
+    return true;
+  };
 }

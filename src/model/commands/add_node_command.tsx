@@ -32,4 +32,8 @@ export default class AddNodeCommand implements ICommand {
   StopsUndo = (): boolean => {
     return true;
   };
+
+  StopsRedo = (): boolean => {
+    return true;
+  };
 }

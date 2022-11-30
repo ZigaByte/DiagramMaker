@@ -28,4 +28,8 @@ export default class RemoveConnectionCommand implements ICommand {
   StopsUndo = (): boolean => {
     return true;
   };
+
+  StopsRedo = (): boolean => {
+    return true;
+  };
 }

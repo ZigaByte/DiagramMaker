@@ -33,4 +33,8 @@ export default class SelectNodeCommand implements ICommand {
   StopsUndo = (): boolean => {
     return true;
   };
+
+  StopsRedo = (): boolean => {
+    return true;
+  };
 }
