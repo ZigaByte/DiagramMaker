@@ -31,4 +31,8 @@ export default class AddConnectionCommand implements ICommand {
   CanCombine = (additive: ICommand): boolean => {
     return false;
   };
+
+  StopsUndo = (): boolean => {
+    return true;
+  };
 }

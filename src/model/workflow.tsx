@@ -32,11 +32,19 @@ export default class Workflow {
   }
 
   Undo() {
-    const lastCommand = this.commnadHistory.pop();
-    if (lastCommand !== undefined) {
+    let lastCommand = this.commnadHistory.pop();
+    let stopsUndo = false;
+    while (lastCommand !== undefined && !stopsUndo) {
+      stopsUndo = lastCommand.StopsUndo();
+
       lastCommand.Undo(this.graph);
       this.undoneCommands.push(lastCommand);
+
+      if (!stopsUndo) {
+        lastCommand = this.commnadHistory.pop();
+      }
     }
+
     console.log(this.commnadHistory);
   }
 

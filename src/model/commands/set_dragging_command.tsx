@@ -22,6 +22,14 @@ export default class SetDraggingCommand implements ICommand {
 
   Undo(graph: Graph): void {
     graph.selection.dragging = !this.dragging;
+    if (this.dragging) {
+      console.log('Moving back');
+      const nodes = graph.selection.GetNodes();
+      nodes.forEach((node) => {
+        node.position = node.position.sub(graph.selection.GetOffset(node));
+      });
+    }
+    graph.selection.offset = new Position(0, 0);
   }
 
   Combine = (additive: ICommand): ICommand => {
@@ -30,5 +38,9 @@ export default class SetDraggingCommand implements ICommand {
 
   CanCombine = (additive: ICommand): boolean => {
     return false;
+  };
+
+  StopsUndo = (): boolean => {
+    return this.dragging;
   };
 }

@@ -29,4 +29,8 @@ export default class SelectNodeCommand implements ICommand {
   CanCombine = (additive: ICommand): boolean => {
     return false;
   };
+
+  StopsUndo = (): boolean => {
+    return true;
+  };
 }

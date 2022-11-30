@@ -24,4 +24,8 @@ export default class RemoveConnectionCommand implements ICommand {
   CanCombine = (additive: ICommand): boolean => {
     return false;
   };
+
+  StopsUndo = (): boolean => {
+    return true;
+  };
 }

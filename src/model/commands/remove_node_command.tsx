@@ -30,4 +30,8 @@ export default class RemoveNodeCommand implements ICommand {
   CanCombine = (additive: ICommand): boolean => {
     return false;
   };
+
+  StopsUndo = (): boolean => {
+    return true;
+  };
 }
