@@ -6,12 +6,13 @@ import Node from 'model/graph/node';
 import Position from 'model/graph/position';
 import React from 'react';
 import './node_style.css';
+import AddNodeCommand from 'model/commands/add_node_command';
 
 type NodeViewProps = {
   node: Node;
   onCommand: (c: ICommand) => void;
 };
-type NodeViewState = {};
+type NodeViewState = { timer?: NodeJS.Timeout; prevent: boolean };
 
 // eslint-disable-next-line react/prefer-stateless-function
 export default class NodeView extends React.Component<
@@ -19,12 +20,16 @@ export default class NodeView extends React.Component<
   NodeViewState
 > {
   handleClick = (event: React.MouseEvent) => {
-    // console.log('Node Click');
-    event.stopPropagation();
+    console.log('Node Click');
     const { node, onCommand } = this.props;
     if (!node.selected) {
       onCommand(new SelectionAddNodeCommand(node.id));
     }
+
+    if (event.detail === 2) {
+      onCommand(new AddNodeCommand(new Position(0, 0)));
+    }
+    event.stopPropagation();
   };
 
   mouseDown = (event: React.MouseEvent) => {
@@ -37,7 +42,7 @@ export default class NodeView extends React.Component<
   };
 
   mouseUp = (event: React.MouseEvent) => {
-    // console.log('Node Down');
+    // console.log('Node Up');
     const { node, onCommand } = this.props;
     if (node.selected) {
       onCommand(new SelectionStartDragCommand(false));
@@ -83,7 +88,8 @@ export default class NodeView extends React.Component<
         role="button"
         tabIndex={0}
       >
-        <h1 className={classes}>{node.text}</h1>
+        {/* <h1 className={classes}>{node.text}</h1> */}
+        <textarea defaultValue="helo"></textarea>
       </div>
     );
   }
