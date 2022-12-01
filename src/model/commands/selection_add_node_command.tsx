@@ -1,7 +1,7 @@
 import Graph from 'model/graph/graph';
 import ICommand from './icommand';
 
-export default class SelectNodeCommand implements ICommand {
+export default class SelectionAddNodeCommand implements ICommand {
   nodeId: number;
 
   constructor(nodeId: number) {

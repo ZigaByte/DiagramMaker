@@ -1,7 +1,7 @@
-import DragSelectionCommand from 'model/commands/drag_selection_command';
+import SelectionDragCommand from 'model/commands/selection_drag_command';
 import ICommand from 'model/commands/icommand';
-import SelectNodeCommand from 'model/commands/select_node_command';
-import SetDraggingCommand from 'model/commands/set_dragging_command';
+import SelectionAddNodeCommand from 'model/commands/selection_add_node_command';
+import SelectionStartDragCommand from 'model/commands/selection_start_drag_command';
 import Node from 'model/graph/node';
 import Position from 'model/graph/position';
 import React from 'react';
@@ -23,7 +23,7 @@ export default class NodeView extends React.Component<
     event.stopPropagation();
     const { node, onCommand } = this.props;
     if (!node.selected) {
-      onCommand(new SelectNodeCommand(node.id));
+      onCommand(new SelectionAddNodeCommand(node.id));
     }
   };
 
@@ -31,7 +31,7 @@ export default class NodeView extends React.Component<
     // console.log('Node Down');
     const { node, onCommand } = this.props;
     if (node.selected) {
-      onCommand(new SetDraggingCommand(true));
+      onCommand(new SelectionStartDragCommand(true));
       event.stopPropagation();
     }
   };
@@ -40,7 +40,7 @@ export default class NodeView extends React.Component<
     // console.log('Node Down');
     const { node, onCommand } = this.props;
     if (node.selected) {
-      onCommand(new SetDraggingCommand(false));
+      onCommand(new SelectionStartDragCommand(false));
       event.stopPropagation();
     }
   };
@@ -50,7 +50,7 @@ export default class NodeView extends React.Component<
     const { node, onCommand } = this.props;
     if (node.dragging) {
       onCommand(
-        new DragSelectionCommand(new Position(event.movementX, event.movementY))
+        new SelectionDragCommand(new Position(event.movementX, event.movementY))
       );
       event.stopPropagation();
     }

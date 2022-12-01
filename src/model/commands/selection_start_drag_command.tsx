@@ -2,7 +2,7 @@ import Graph from 'model/graph/graph';
 import Position from 'model/graph/position';
 import ICommand from './icommand';
 
-export default class SetDraggingCommand implements ICommand {
+export default class SelectionStartDragCommand implements ICommand {
   dragging: boolean;
 
   constructor(dragging: boolean) {
@@ -23,7 +23,6 @@ export default class SetDraggingCommand implements ICommand {
   Undo(graph: Graph): void {
     graph.selection.dragging = !this.dragging;
     if (this.dragging) {
-      console.log('Moving back');
       const nodes = graph.selection.GetNodes();
       nodes.forEach((node) => {
         node.position = node.position.sub(graph.selection.GetOffset(node));

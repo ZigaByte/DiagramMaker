@@ -2,7 +2,7 @@ import Graph from 'model/graph/graph';
 import Node from 'model/graph/node';
 import ICommand from './icommand';
 
-export default class DeselectAllCommand implements ICommand {
+export default class SelectionDeselectCommand implements ICommand {
   selectedNodes: Node[] = [];
 
   Execute(graph: Graph): void {

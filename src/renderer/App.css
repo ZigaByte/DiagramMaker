@@ -18,9 +18,9 @@ body {
   justify-content: center;
   align-items: center;
 
-  background: #eee;
+  /* background: #eee;
   background-image: linear-gradient(rgba(200, 200, 200, .3) .1em, transparent .1em), linear-gradient(90deg, rgba(200, 200, 200, .3) .1em, transparent .1em);
-  background-size: 3em 3em;
+  background-size: 3em 3em; */
 }
 
 button {

@@ -1,8 +1,12 @@
 import Selection from 'model/selection/selection';
+import GraphOffset from 'model/selection/graph_offset';
 import Node from './node';
 import Connection from './connection';
+import Position from './position';
 
 export default class Graph {
+  graph_offset: GraphOffset = new GraphOffset();
+
   selection: Selection = new Selection();
 
   nodes: Node[] = [];

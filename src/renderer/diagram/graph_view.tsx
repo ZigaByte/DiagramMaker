@@ -5,8 +5,11 @@ import ICommand from 'model/commands/icommand';
 import AddNodeCommand from 'model/commands/add_node_command';
 import NodeView from './node_view';
 import ConnectionView from './connection_view';
-import DeselectAllCommand from 'model/commands/deselect_all_command';
-import DragSelectionCommand from 'model/commands/drag_selection_command';
+import SelectionDeselectCommand from 'model/commands/selection_deselect_command';
+import SelectionDragCommand from 'model/commands/selection_drag_command';
+import './graph_style.css';
+import GraphStartDragCommand from 'model/commands/graph_start_drag_command copy';
+import GraphDragCommand from 'model/commands/graph_drag_command';
 
 type GraphViewProps = {
   graph: Graph;
@@ -23,12 +26,20 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
 
   handleClick = (event: React.MouseEvent) => {
     const commandDown = event.metaKey || event.ctrlKey;
-    const { onCommand } = this.props;
+    const { graph, onCommand } = this.props;
 
     if (commandDown) {
-      onCommand(new AddNodeCommand(new Position(event.clientX, event.clientY)));
+      const worldOffset = graph.graph_offset.offset;
+      onCommand(
+        new AddNodeCommand(
+          new Position(
+            event.clientX - worldOffset.x,
+            event.clientY - worldOffset.y
+          )
+        )
+      );
     } else {
-      onCommand(new DeselectAllCommand());
+      onCommand(new SelectionDeselectCommand());
     }
     // this.setState((previousState) => ({ graph: previousState.graph }));
     event.stopPropagation();
@@ -39,8 +50,32 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
     const { onCommand } = this.props;
     if (graph.selection.dragging) {
       onCommand(
-        new DragSelectionCommand(new Position(event.movementX, event.movementY))
+        new SelectionDragCommand(new Position(event.movementX, event.movementY))
       );
+      event.stopPropagation();
+    } else if (graph.graph_offset.dragging) {
+      onCommand(
+        new GraphDragCommand(new Position(event.movementX, event.movementY))
+      );
+      event.stopPropagation();
+    }
+  };
+
+  mouseDown = (event: React.MouseEvent) => {
+    // console.log('Node Down');
+    const { graph, onCommand } = this.props;
+    if (!graph.selection.dragging) {
+      onCommand(new GraphStartDragCommand(true));
+      event.stopPropagation();
+    }
+  };
+
+  mouseUp = (event: React.MouseEvent) => {
+    // console.log('Node Down');
+    const { graph, onCommand } = this.props;
+    if (graph.graph_offset.dragging) {
+      onCommand(new GraphStartDragCommand(false));
+      event.stopPropagation();
     }
   };
 
@@ -51,6 +86,8 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
       <div
         onClick={this.handleClick}
         onMouseMove={this.mouseMove}
+        onMouseUp={this.mouseUp}
+        onMouseDown={this.mouseDown}
         onKeyDown={() => {}}
         tabIndex={0}
         role="button"
@@ -59,7 +96,10 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
           position: 'absolute',
           width: '100%',
           height: '100%',
+          left: graph.graph_offset.offset.x,
+          top: graph.graph_offset.offset.y,
         }}
+        className="graph"
       >
         {graph.GetDisplayConnections().map((connection, i) => (
           <ConnectionView key={connection.id} connection={connection} />
