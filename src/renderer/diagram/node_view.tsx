@@ -7,6 +7,7 @@ import Position from 'model/graph/position';
 import React from 'react';
 import './node_style.css';
 import AddNodeCommand from 'model/commands/add_node_command';
+import NodeEditTextCommand from 'model/commands/node_edit_text_command';
 
 type NodeViewProps = {
   node: Node;
@@ -20,21 +21,20 @@ export default class NodeView extends React.Component<
   NodeViewState
 > {
   handleClick = (event: React.MouseEvent) => {
-    console.log('Node Click');
     const { node, onCommand } = this.props;
     if (!node.selected) {
       onCommand(new SelectionAddNodeCommand(node.id));
     }
 
     if (event.detail === 2) {
-      onCommand(new AddNodeCommand(new Position(0, 0)));
+      onCommand(new NodeEditTextCommand(node.id, node.text));
     }
     event.stopPropagation();
   };
 
   mouseDown = (event: React.MouseEvent) => {
-    // console.log('Node Down');
     const { node, onCommand } = this.props;
+    console.log('Node Down ' + node.id);
     if (node.selected) {
       onCommand(new SelectionStartDragCommand(true));
       event.stopPropagation();
@@ -42,8 +42,8 @@ export default class NodeView extends React.Component<
   };
 
   mouseUp = (event: React.MouseEvent) => {
-    // console.log('Node Up');
     const { node, onCommand } = this.props;
+    console.log('Node Up ' + node.id);
     if (node.selected) {
       onCommand(new SelectionStartDragCommand(false));
       event.stopPropagation();
@@ -77,6 +77,14 @@ export default class NodeView extends React.Component<
     const selectedClass = isSelected ? 'selected' : '';
     const classes = `node ${selectedClass}`;
 
+    let nodeHtml;
+
+    if (node.editing) {
+      nodeHtml = <textarea className={classes} defaultValue={node.text} />;
+    } else {
+      nodeHtml = <h1 className={classes}>{node.text}</h1>;
+    }
+
     return (
       <div
         style={style}
@@ -88,8 +96,7 @@ export default class NodeView extends React.Component<
         role="button"
         tabIndex={0}
       >
-        {/* <h1 className={classes}>{node.text}</h1> */}
-        <textarea defaultValue="helo"></textarea>
+        {nodeHtml}
       </div>
     );
   }

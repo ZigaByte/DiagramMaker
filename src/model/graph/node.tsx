@@ -7,9 +7,11 @@ export default class Node {
 
   text: string;
 
-  selected?: boolean;
+  selected: boolean = false;
 
-  dragging?: boolean;
+  dragging: boolean = false;
+
+  editing: boolean = false;
 
   constructor(id: number, position: Position, text: string) {
     this.id = id;

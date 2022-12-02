@@ -2,7 +2,6 @@ import Selection from 'model/selection/selection';
 import GraphOffset from 'model/selection/graph_offset';
 import Node from './node';
 import Connection from './connection';
-import Position from './position';
 
 export default class Graph {
   graph_offset: GraphOffset = new GraphOffset();
@@ -60,6 +59,7 @@ export default class Graph {
     );
     displayNode.selected = this.selection.IsSelected(node);
     displayNode.dragging = displayNode.selected && this.selection.dragging;
+    displayNode.editing = node.editing;
     return displayNode;
   }
 

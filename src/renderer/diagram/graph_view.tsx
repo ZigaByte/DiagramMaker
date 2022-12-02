@@ -10,6 +10,7 @@ import SelectionDragCommand from 'model/commands/selection_drag_command';
 import './graph_style.css';
 import GraphStartDragCommand from 'model/commands/graph_start_drag_command copy';
 import GraphDragCommand from 'model/commands/graph_drag_command';
+import SelectionStartDragCommand from 'model/commands/selection_start_drag_command';
 
 type GraphViewProps = {
   graph: Graph;
@@ -62,7 +63,7 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
   };
 
   mouseDown = (event: React.MouseEvent) => {
-    // console.log('Node Down');
+    // console.log('Graph Down');
     const { graph, onCommand } = this.props;
     if (!graph.selection.dragging) {
       onCommand(new GraphStartDragCommand(true));
@@ -71,10 +72,13 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
   };
 
   mouseUp = (event: React.MouseEvent) => {
-    // console.log('Node Down');
+    // console.log('Graph Up');
     const { graph, onCommand } = this.props;
     if (graph.graph_offset.dragging) {
       onCommand(new GraphStartDragCommand(false));
+      event.stopPropagation();
+    } else if (graph.selection.dragging) {
+      onCommand(new SelectionStartDragCommand(false));
       event.stopPropagation();
     }
   };
