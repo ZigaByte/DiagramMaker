@@ -81,11 +81,11 @@ export default class NodeView extends React.Component<
     const isSelected = node.selected;
 
     const selectedClass = isSelected ? 'selected' : '';
-    const classes = `node ${selectedClass}`;
 
     let nodeHtml;
 
     if (node.editing) {
+      const classes = `node_edit ${selectedClass}`;
       nodeHtml = (
         <textarea
           onChange={this.onTextEdit}
@@ -94,8 +94,7 @@ export default class NodeView extends React.Component<
         />
       );
     } else {
-      console.log(node.text.split('\n'));
-
+      const classes = `node ${selectedClass}`;
       nodeHtml = (
         <div className={classes}>
           {node.text.split('\n').map((textPart) => {
