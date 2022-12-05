@@ -35,6 +35,10 @@ export default class Selection {
     return this.selectedNodes;
   }
 
+  IsEmpty(): boolean {
+    return this.selectedNodes.length === 0;
+  }
+
   GetOffset(node: Node): Position {
     if (this.IsSelected(node)) {
       return this.offset;

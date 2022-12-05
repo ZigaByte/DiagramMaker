@@ -120,7 +120,7 @@ export default class MenuBuilder {
         },
         {
           label: 'Delete',
-          accelerator: 'D',
+          accelerator: 'Backspace',
           click: () => {
             this.mainWindow.webContents.send('menu-delete');
           },
@@ -223,7 +223,7 @@ export default class MenuBuilder {
           },
           {
             label: 'Delete',
-            accelerator: 'D',
+            accelerator: 'Delete',
             click: () => {
               this.mainWindow.webContents.send('menu-delete');
             },

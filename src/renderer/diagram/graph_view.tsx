@@ -11,6 +11,7 @@ import './graph_style.css';
 import GraphStartDragCommand from 'model/commands/graph_start_drag_command copy';
 import GraphDragCommand from 'model/commands/graph_drag_command';
 import SelectionStartDragCommand from 'model/commands/selection_start_drag_command';
+import NodeStopEditTextCommand from 'model/commands/node_stop_edit_text_command';
 
 type GraphViewProps = {
   graph: Graph;
@@ -39,11 +40,14 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
           )
         )
       );
-    } else {
+      event.stopPropagation();
+    } else if (graph.EditingAnyNode()) {
+      onCommand(new NodeStopEditTextCommand());
+      event.stopPropagation();
+    } else if (!graph.selection.IsEmpty()) {
       onCommand(new SelectionDeselectCommand());
+      event.stopPropagation();
     }
-    // this.setState((previousState) => ({ graph: previousState.graph }));
-    event.stopPropagation();
   };
 
   mouseMove = (event: React.MouseEvent) => {

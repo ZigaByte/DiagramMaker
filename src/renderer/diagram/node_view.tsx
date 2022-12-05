@@ -61,6 +61,12 @@ export default class NodeView extends React.Component<
     }
   };
 
+  onTextEdit = (event: React.ChangeEvent) => {
+    const { node, onCommand } = this.props;
+    onCommand(new NodeEditTextCommand(node.id, event.target.value));
+    event.stopPropagation();
+  };
+
   render() {
     const { node } = this.props;
 
@@ -80,9 +86,23 @@ export default class NodeView extends React.Component<
     let nodeHtml;
 
     if (node.editing) {
-      nodeHtml = <textarea className={classes} defaultValue={node.text} />;
+      nodeHtml = (
+        <textarea
+          onChange={this.onTextEdit}
+          className={classes}
+          defaultValue={node.text}
+        />
+      );
     } else {
-      nodeHtml = <h1 className={classes}>{node.text}</h1>;
+      console.log(node.text.split('\n'));
+
+      nodeHtml = (
+        <div className={classes}>
+          {node.text.split('\n').map((textPart) => {
+            return <div className="text">{textPart}</div>;
+          })}
+        </div>
+      );
     }
 
     return (

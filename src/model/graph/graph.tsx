@@ -29,8 +29,11 @@ export default class Graph {
   }
 
   GetNode(id: number): Node | undefined {
-    // TODO: This should present the current position, combined with the selection offsets.
     return this.nodes.find((node) => node.id === id);
+  }
+
+  GetNodes(): Node[] {
+    return this.nodes;
   }
 
   GetNextId(): number {
@@ -77,5 +80,9 @@ export default class Graph {
 
   GetDisplayNodes(): Node[] {
     return this.nodes.map((n) => this.GetDisplayNode(n));
+  }
+
+  EditingAnyNode(): boolean {
+    return this.nodes.some((node) => node.editing);
   }
 }

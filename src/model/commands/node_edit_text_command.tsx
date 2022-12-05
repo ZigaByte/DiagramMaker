@@ -15,7 +15,6 @@ export default class NodeEditTextCommand implements ICommand {
 
   Execute(graph: Graph): void {
     const node = graph.GetNode(this.nodeId);
-    console.log("editing");
     if (node !== undefined) {
       this.oldText = node.text;
       node.text = this.newText;
@@ -52,7 +51,7 @@ export default class NodeEditTextCommand implements ICommand {
   };
 
   StopsUndo = (): boolean => {
-    return false;
+    return true;
   };
 
   StopsRedo = (): boolean => {
