@@ -97,8 +97,13 @@ export default class NodeView extends React.Component<
       const classes = `node ${selectedClass}`;
       nodeHtml = (
         <div className={classes}>
-          {node.text.split('\n').map((textPart) => {
-            return <div className="text">{textPart}</div>;
+          {node.text.split('\n').map((textPart, i) => {
+            return (
+              // eslint-disable-next-line react/no-array-index-key
+              <div key={i} className="text">
+                {textPart}
+              </div>
+            );
           })}
         </div>
       );

@@ -42,7 +42,7 @@ export default class Workflow {
         lastCommand = this.commnadHistory.pop();
       }
     }
-    console.log(this.commnadHistory);
+    // console.log(this.commnadHistory);
   }
 
   Redo() {
@@ -58,7 +58,7 @@ export default class Workflow {
         lastCommand = this.undoneCommands.pop();
       }
     }
-    console.log(this.commnadHistory);
+    // console.log(this.commnadHistory);
   }
 
   GetGraph(): Graph {
