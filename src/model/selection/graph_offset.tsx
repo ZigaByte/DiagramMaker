@@ -1,4 +1,3 @@
-import Node from 'model/graph/node';
 import Position from 'model/graph/position';
 
 export default class GraphOffset {
@@ -6,7 +5,7 @@ export default class GraphOffset {
 
   dragging: boolean = false;
 
-  GetOffset(node: Node): Position {
+  GetOffset(): Position {
     return this.offset;
   }
 

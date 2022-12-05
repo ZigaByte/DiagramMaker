@@ -57,7 +57,9 @@ export default class Graph {
   GetDisplayNode(node: Node): Node {
     const displayNode = new Node(
       node.id,
-      node.position.add(this.selection.GetOffset(node)),
+      node.position
+        .add(this.selection.GetOffset(node))
+        .add(this.graph_offset.GetOffset()),
       node.text
     );
     displayNode.selected = this.selection.IsSelected(node);
