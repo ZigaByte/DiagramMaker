@@ -34,7 +34,7 @@ export default class NodeView extends React.Component<
 
   mouseDown = (event: React.MouseEvent) => {
     const { node, onCommand } = this.props;
-    console.log('Node Down ' + node.id);
+    // console.log('Node Down ' + node.id);
     if (node.selected) {
       onCommand(new SelectionStartDragCommand(true));
       event.stopPropagation();
@@ -43,7 +43,7 @@ export default class NodeView extends React.Component<
 
   mouseUp = (event: React.MouseEvent) => {
     const { node, onCommand } = this.props;
-    console.log('Node Up ' + node.id);
+    // console.log('Node Up ' + node.id);
     if (node.selected) {
       onCommand(new SelectionStartDragCommand(false));
       event.stopPropagation();
