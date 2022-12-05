@@ -3,8 +3,6 @@ import Position from 'model/graph/position';
 import React from 'react';
 import ICommand from 'model/commands/icommand';
 import AddNodeCommand from 'model/commands/add_node_command';
-import NodeView from './node_view';
-import ConnectionView from './connection_view';
 import SelectionDeselectCommand from 'model/commands/selection_deselect_command';
 import SelectionDragCommand from 'model/commands/selection_drag_command';
 import './graph_style.css';
@@ -12,6 +10,8 @@ import GraphStartDragCommand from 'model/commands/graph_start_drag_command copy'
 import GraphDragCommand from 'model/commands/graph_drag_command';
 import SelectionStartDragCommand from 'model/commands/selection_start_drag_command';
 import NodeStopEditTextCommand from 'model/commands/node_stop_edit_text_command';
+import NodeView from './node_view';
+import ConnectionView from './connection_view';
 
 type GraphViewProps = {
   graph: Graph;
