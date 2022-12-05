@@ -67,7 +67,7 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
   };
 
   mouseDown = (event: React.MouseEvent) => {
-    console.log('Graph Down');
+    // console.log('Graph Down');
     const { graph, onCommand } = this.props;
     if (!graph.selection.dragging) {
       onCommand(new GraphStartDragCommand(true));
@@ -76,7 +76,7 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
   };
 
   mouseUp = (event: React.MouseEvent) => {
-    console.log('Graph Up');
+    // console.log('Graph Up');
     const { graph, onCommand } = this.props;
     if (graph.graph_offset.dragging) {
       onCommand(new GraphStartDragCommand(false));
@@ -96,6 +96,7 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
         onMouseMove={this.mouseMove}
         onMouseUp={this.mouseUp}
         onMouseDown={this.mouseDown}
+        onMouseLeave={this.mouseUp}
         onKeyDown={() => {}}
         tabIndex={0}
         role="button"
