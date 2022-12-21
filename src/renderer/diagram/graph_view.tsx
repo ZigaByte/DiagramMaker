@@ -12,18 +12,19 @@ import SelectionStartDragCommand from 'model/commands/selection_start_drag_comma
 import NodeStopEditTextCommand from 'model/commands/node_stop_edit_text_command';
 import NodeView from './node_view';
 import ConnectionView from './connection_view';
+import Keymap from 'model/keyboard/keymap';
 
 type GraphViewProps = {
   graph: Graph;
   onCommand: (c: ICommand) => void;
 };
-type GraphViewState = { graph: Graph };
+type GraphViewState = { graph: Graph; keymap: Keymap };
 
 // eslint-disable-next-line react/prefer-stateless-function
 class GraphView extends React.Component<GraphViewProps, GraphViewState> {
   constructor(props: GraphViewProps) {
     super(props);
-    this.state = { graph: props.graph };
+    this.state = { graph: props.graph, keymap: new Keymap() };
   }
 
   handleClick = (event: React.MouseEvent) => {
@@ -69,7 +70,8 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
   mouseDown = (event: React.MouseEvent) => {
     // console.log('Graph Down');
     const { graph, onCommand } = this.props;
-    if (!graph.selection.dragging) {
+    const { keymap } = this.state;
+    if (!graph.selection.dragging && keymap.isDown(' ')) {
       onCommand(new GraphStartDragCommand(true));
       event.stopPropagation();
     }
@@ -87,6 +89,16 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
     }
   };
 
+  keyDown = (event: React.KeyboardEvent) => {
+    const { keymap } = this.state;
+    keymap.onDown(event.key);
+  };
+
+  keyUp = (event: React.KeyboardEvent) => {
+    const { keymap } = this.state;
+    keymap.onUp(event.key);
+  };
+
   render() {
     const { graph } = this.state;
     const { onCommand } = this.props;
@@ -97,7 +109,9 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
         onMouseUp={this.mouseUp}
         onMouseDown={this.mouseDown}
         onMouseLeave={this.mouseUp}
-        onKeyDown={() => {}}
+        // This is how we can handle different keys
+        onKeyDown={this.keyDown}
+        onKeyUp={this.keyUp}
         tabIndex={0}
         role="button"
         style={{
