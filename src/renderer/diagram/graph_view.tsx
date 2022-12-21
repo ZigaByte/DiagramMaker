@@ -13,6 +13,8 @@ import NodeStopEditTextCommand from 'model/commands/node_stop_edit_text_command'
 import NodeView from './node_view';
 import ConnectionView from './connection_view';
 import Keymap from 'model/keyboard/keymap';
+import SelectionBoxStartCommand from 'model/commands/selection_box_start_command';
+import SelectionBoxDragCommand from 'model/commands/selection_box_drag_command';
 
 type GraphViewProps = {
   graph: Graph;
@@ -54,15 +56,17 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
   mouseMove = (event: React.MouseEvent) => {
     const { graph } = this.state;
     const { onCommand } = this.props;
+
+    const offset = new Position(event.movementX, event.movementY);
+
     if (graph.selection.dragging) {
-      onCommand(
-        new SelectionDragCommand(new Position(event.movementX, event.movementY))
-      );
+      onCommand(new SelectionDragCommand(offset));
       event.stopPropagation();
     } else if (graph.graph_offset.dragging) {
-      onCommand(
-        new GraphDragCommand(new Position(event.movementX, event.movementY))
-      );
+      onCommand(new GraphDragCommand(offset));
+      event.stopPropagation();
+    } else if (graph.selectionBox.active) {
+      onCommand(new SelectionBoxDragCommand(offset));
       event.stopPropagation();
     }
   };
@@ -73,6 +77,8 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
     if (!graph.selection.dragging && keymap.isDown(' ')) {
       onCommand(new GraphStartDragCommand(true));
       event.stopPropagation();
+    } else {
+      onCommand(new SelectionBoxStartCommand(true));
     }
   };
 

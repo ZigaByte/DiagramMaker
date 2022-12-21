@@ -1,5 +1,6 @@
 import Selection from 'model/selection/selection';
 import GraphOffset from 'model/selection/graph_offset';
+import SelectionBox from 'model/selection/selection_box';
 import Node from './node';
 import Connection from './connection';
 
@@ -7,6 +8,8 @@ export default class Graph {
   graph_offset: GraphOffset = new GraphOffset();
 
   selection: Selection = new Selection();
+
+  selectionBox: SelectionBox = new SelectionBox();
 
   nodes: Node[] = [];
 
