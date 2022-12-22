@@ -10,11 +10,12 @@ import GraphStartDragCommand from 'model/commands/graph_start_drag_command copy'
 import GraphDragCommand from 'model/commands/graph_drag_command';
 import SelectionStartDragCommand from 'model/commands/selection_start_drag_command';
 import NodeStopEditTextCommand from 'model/commands/node_stop_edit_text_command';
-import NodeView from './node_view';
-import ConnectionView from './connection_view';
 import Keymap from 'model/keyboard/keymap';
 import SelectionBoxStartCommand from 'model/commands/selection_box_start_command';
 import SelectionBoxDragCommand from 'model/commands/selection_box_drag_command';
+import NodeView from './node_view';
+import ConnectionView from './connection_view';
+import SelectionBoxView from './selection_box_view';
 
 type GraphViewProps = {
   graph: Graph;
@@ -23,7 +24,10 @@ type GraphViewProps = {
 type GraphViewState = { graph: Graph; keymap: Keymap };
 
 // eslint-disable-next-line react/prefer-stateless-function
-class GraphView extends React.Component<GraphViewProps, GraphViewState> {
+export default class GraphView extends React.Component<
+  GraphViewProps,
+  GraphViewState
+> {
   constructor(props: GraphViewProps) {
     super(props);
     this.state = { graph: props.graph, keymap: new Keymap() };
@@ -78,7 +82,11 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
       onCommand(new GraphStartDragCommand(true));
       event.stopPropagation();
     } else {
-      onCommand(new SelectionBoxStartCommand(true));
+      const startPosition = new Position(
+        event.clientX - graph.graph_offset.offset.x,
+        event.clientY - graph.graph_offset.offset.y
+      );
+      onCommand(new SelectionBoxStartCommand(true, startPosition));
     }
   };
 
@@ -89,6 +97,13 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
       event.stopPropagation();
     } else if (graph.selection.dragging) {
       onCommand(new SelectionStartDragCommand(false));
+      event.stopPropagation();
+    } else if (graph.selectionBox.active) {
+      const endPosition = new Position(
+        event.clientX - graph.graph_offset.offset.x,
+        event.clientY - graph.graph_offset.offset.y
+      );
+      onCommand(new SelectionBoxStartCommand(false, endPosition));
       event.stopPropagation();
     }
   };
@@ -106,6 +121,7 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
   render() {
     const { graph } = this.state;
     const { onCommand } = this.props;
+
     return (
       <div
         onClick={this.handleClick}
@@ -133,9 +149,10 @@ class GraphView extends React.Component<GraphViewProps, GraphViewState> {
         {graph.GetDisplayNodes().map((node, i) => (
           <NodeView key={node.id} node={node} onCommand={onCommand} />
         ))}
+        {graph.selectionBox.active && (
+          <SelectionBoxView selectionBox={graph.selectionBox} />
+        )}
       </div>
     );
   }
 }
-
-export default GraphView;

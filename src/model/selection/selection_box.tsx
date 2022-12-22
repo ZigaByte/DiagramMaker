@@ -18,4 +18,15 @@ export default class SelectionBox {
   SetActive(active: boolean) {
     this.active = active;
   }
+
+  GetTopLeft() {
+    return new Position(
+      Math.min(this.startPosition.x, this.startPosition.x + this.size.x),
+      Math.min(this.startPosition.y, this.startPosition.y + this.size.y)
+    );
+  }
+
+  GetSize() {
+    return this.size.absolute();
+  }
 }

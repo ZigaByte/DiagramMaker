@@ -15,6 +15,7 @@ export default class SelectionBoxStartCommand implements ICommand {
   Execute(graph: Graph): void {
     graph.selectionBox.SetActive(this.start);
     graph.selectionBox.startPosition = this.position;
+    graph.selectionBox.size = new Position(0, 0);
   }
 
   Undo(graph: Graph): void {
