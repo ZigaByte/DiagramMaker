@@ -20,22 +20,18 @@ export default class NodeView extends React.Component<
   NodeViewProps,
   NodeViewState
 > {
-  handleClick = (event: React.MouseEvent) => {
-    const { node, onCommand } = this.props;
-    if (!node.selected) {
-      onCommand(new SelectionAddNodeCommand(node.id));
-    }
-
-    if (event.detail === 2) {
-      onCommand(new NodeEditTextCommand(node.id, node.text));
-    }
-    event.stopPropagation();
-  };
-
   mouseDown = (event: React.MouseEvent) => {
     const { node, onCommand } = this.props;
     if (node.selected) {
       onCommand(new SelectionStartDragCommand(true));
+      event.stopPropagation();
+    } else if (!node.selected) {
+      onCommand(new SelectionAddNodeCommand(node.id));
+      event.stopPropagation();
+    }
+
+    if (event.detail === 2) {
+      onCommand(new NodeEditTextCommand(node.id, node.text));
       event.stopPropagation();
     }
   };
@@ -109,7 +105,6 @@ export default class NodeView extends React.Component<
     return (
       <div
         style={style}
-        onClick={this.handleClick}
         onMouseDown={this.mouseDown}
         onMouseMove={this.mouseMove}
         onMouseUp={this.mouseUp}

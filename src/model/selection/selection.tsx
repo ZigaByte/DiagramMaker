@@ -19,7 +19,9 @@ export default class Selection {
   }
 
   Remove(node: Node) {
+    console.log(this.selectedNodes);
     this.selectedNodes = this.selectedNodes.filter((n) => n !== node);
+    console.log(this.selectedNodes);
   }
 
   Clear() {

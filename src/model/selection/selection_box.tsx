@@ -11,8 +11,8 @@ export default class SelectionBox {
   IsSelected(node: Node): boolean {
     const topLeft = this.GetTopLeft();
     const size = this.GetSize();
-    console.log(node.position);
     return (
+      this.active &&
       topLeft.x <= node.position.x &&
       topLeft.y <= node.position.y &&
       node.position.x < topLeft.x + size.x &&

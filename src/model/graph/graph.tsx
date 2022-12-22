@@ -80,6 +80,16 @@ export default class Graph {
     );
   }
 
+  GetDisplaySelectionBox(): SelectionBox {
+    const displaySelectionBox = new SelectionBox();
+    displaySelectionBox.startPosition = this.selectionBox.startPosition.add(
+      this.graph_offset.GetOffset()
+    );
+    displaySelectionBox.size = this.selectionBox.size;
+    displaySelectionBox.active = this.selectionBox.active;
+    return displaySelectionBox;
+  }
+
   GetDisplayConnections(): Connection[] {
     return this.connections.map((c) => this.GetDisplayConnection(c));
   }

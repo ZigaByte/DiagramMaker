@@ -33,30 +33,6 @@ export default class GraphView extends React.Component<
     this.state = { graph: props.graph, keymap: new Keymap() };
   }
 
-  handleClick = (event: React.MouseEvent) => {
-    const commandDown = event.metaKey || event.ctrlKey;
-    const { graph, onCommand } = this.props;
-
-    if (commandDown) {
-      const worldOffset = graph.graph_offset.offset;
-      onCommand(
-        new AddNodeCommand(
-          new Position(
-            event.clientX - worldOffset.x,
-            event.clientY - worldOffset.y
-          )
-        )
-      );
-      event.stopPropagation();
-    } else if (graph.EditingAnyNode()) {
-      onCommand(new NodeStopEditTextCommand());
-      event.stopPropagation();
-    } else if (!graph.selection.IsEmpty()) {
-      onCommand(new SelectionDeselectCommand());
-      event.stopPropagation();
-    }
-  };
-
   mouseMove = (event: React.MouseEvent) => {
     const { graph } = this.state;
     const { onCommand } = this.props;
@@ -78,8 +54,28 @@ export default class GraphView extends React.Component<
   mouseDown = (event: React.MouseEvent) => {
     const { graph, onCommand } = this.props;
     const { keymap } = this.state;
+    const commandDown = event.metaKey || event.ctrlKey;
+
     if (!graph.selection.dragging && keymap.isDown(' ')) {
       onCommand(new GraphStartDragCommand(true));
+      event.stopPropagation();
+    } else if (commandDown) {
+      const worldOffset = graph.graph_offset.offset;
+      onCommand(
+        new AddNodeCommand(
+          new Position(
+            event.clientX - worldOffset.x,
+            event.clientY - worldOffset.y
+          )
+        )
+      );
+      event.stopPropagation();
+    } else if (graph.EditingAnyNode()) {
+      onCommand(new NodeStopEditTextCommand());
+      event.stopPropagation();
+    } else if (!graph.selection.IsEmpty()) {
+      // TODO: There should probably be some sort of delay here. Or it should be done on up.
+      onCommand(new SelectionDeselectCommand());
       event.stopPropagation();
     } else {
       const startPosition = new Position(
@@ -124,7 +120,6 @@ export default class GraphView extends React.Component<
 
     return (
       <div
-        onClick={this.handleClick}
         onMouseMove={this.mouseMove}
         onMouseUp={this.mouseUp}
         onMouseDown={this.mouseDown}
@@ -150,7 +145,7 @@ export default class GraphView extends React.Component<
           <NodeView key={node.id} node={node} onCommand={onCommand} />
         ))}
         {graph.selectionBox.active && (
-          <SelectionBoxView selectionBox={graph.selectionBox} />
+          <SelectionBoxView selectionBox={graph.GetDisplaySelectionBox()} />
         )}
       </div>
     );
