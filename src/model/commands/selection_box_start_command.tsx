@@ -20,18 +20,11 @@ export default class SelectionBoxStartCommand implements ICommand {
       graph.selectionBox.startPosition = this.position;
       graph.selectionBox.size = new Position(0, 0);
     } else {
-      console.log('Adding2');
       graph.GetNodes().forEach((node) => {
-        console.log(
-          node,
-          !graph.selection.IsSelected(node),
-          graph.selectionBox.IsSelected(node)
-        );
         if (
           !graph.selection.IsSelected(node) &&
           graph.selectionBox.IsSelected(node)
         ) {
-          console.log('Adding');
           graph.selection.Add(node);
           this.selectedNodeIds.push(node.id);
         }
@@ -43,12 +36,10 @@ export default class SelectionBoxStartCommand implements ICommand {
   Undo(graph: Graph): void {
     graph.selectionBox.SetActive(!this.start);
 
-    console.log('undoing');
     if (!this.start) {
       this.selectedNodeIds.forEach((nodeId) => {
         const node = graph.GetNode(nodeId);
         if (node !== undefined) {
-          console.log('removing');
           graph.selection.Remove(node);
         }
       });

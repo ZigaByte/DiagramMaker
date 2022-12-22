@@ -27,7 +27,6 @@ export default class Workflow {
       this.commnadHistory.push(command);
     }
     this.undoneCommands = [];
-    console.log(this.commnadHistory);
   }
 
   Undo() {
@@ -43,7 +42,6 @@ export default class Workflow {
         lastCommand = this.commnadHistory.pop();
       }
     }
-    console.log(this.commnadHistory);
   }
 
   Redo() {
