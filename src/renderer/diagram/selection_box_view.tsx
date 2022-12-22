@@ -16,7 +16,6 @@ export default class SelectionBoxView extends React.Component<
     const { selectionBox } = this.props;
     const size = selectionBox.GetSize();
     const position = selectionBox.GetTopLeft();
-    console.log(size, position);
     return (
       <div
         style={{

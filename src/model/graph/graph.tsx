@@ -65,7 +65,8 @@ export default class Graph {
         .add(this.graph_offset.GetOffset()),
       node.text
     );
-    displayNode.selected = this.selection.IsSelected(node);
+    displayNode.selected =
+      this.selection.IsSelected(node) || this.selectionBox.IsSelected(node);
     displayNode.dragging = displayNode.selected && this.selection.dragging;
     displayNode.editing = node.editing;
     return displayNode;

@@ -2,8 +2,6 @@ import Node from 'model/graph/node';
 import Position from 'model/graph/position';
 
 export default class SelectionBox {
-  selectedNodes: Node[] = [];
-
   startPosition: Position = new Position(0, 0);
 
   size: Position = new Position(0, 0);
@@ -11,8 +9,15 @@ export default class SelectionBox {
   active: boolean = false;
 
   IsSelected(node: Node): boolean {
-    // Probably this is done dynamically.
-    return this.selectedNodes.includes(node);
+    const topLeft = this.GetTopLeft();
+    const size = this.GetSize();
+    console.log(node.position);
+    return (
+      topLeft.x <= node.position.x &&
+      topLeft.y <= node.position.y &&
+      node.position.x < topLeft.x + size.x &&
+      node.position.y < topLeft.y + size.y
+    );
   }
 
   SetActive(active: boolean) {
