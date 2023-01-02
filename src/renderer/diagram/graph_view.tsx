@@ -85,12 +85,6 @@ export default class GraphView extends React.Component<
 
   mouseUp = (event: React.MouseEvent) => {
     const { graph, onCommand } = this.props;
-    console.log(
-      graph.graph_offset.dragging,
-      graph.selection.dragging,
-      graph.selectionBox.active,
-      !graph.selection.IsEmpty()
-    );
     if (graph.graph_offset.dragging) {
       onCommand(new GraphStartDragCommand(false));
       event.stopPropagation();
