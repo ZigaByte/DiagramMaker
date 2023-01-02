@@ -49,7 +49,7 @@ export default class NodeTextAreaView extends React.Component<
 
   onKeyDown = (event: React.KeyboardEvent) => {
     const { node, onCommand } = this.props;
-    if (node.editing && event.key === 'Enter') {
+    if (node.editing && event.key === 'Enter' && !event.shiftKey) {
       onCommand(new NodeStopEditTextCommand());
     }
   };
@@ -60,7 +60,8 @@ export default class NodeTextAreaView extends React.Component<
 
     const classes = node.selected ? 'node_edit selected' : 'node_edit';
     return (
-      <input
+      <textarea
+        placeholder="New Node"
         onChange={this.onTextEdit}
         onKeyDown={this.onKeyDown}
         className={classes}
