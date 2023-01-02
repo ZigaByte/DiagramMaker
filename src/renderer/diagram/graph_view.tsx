@@ -74,6 +74,10 @@ export default class GraphView extends React.Component<
       onCommand(new NodeStopEditTextCommand());
       event.stopPropagation();
     } else {
+      if (!graph.selection.IsEmpty()) {
+        onCommand(new SelectionDeselectCommand());
+      }
+
       const startPosition = new Position(
         event.clientX - graph.graph_offset.offset.x,
         event.clientY - graph.graph_offset.offset.y
