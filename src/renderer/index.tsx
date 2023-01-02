@@ -1,9 +1,7 @@
 import AddConnectionCommand from 'model/commands/add_connection_command';
+import RemoveConnectionCommand from 'model/commands/remove_connection_command';
 import RemoveNodeCommand from 'model/commands/remove_node_command';
-import Connection from 'model/graph/connection';
 import Graph from 'model/graph/graph';
-import Node from 'model/graph/node';
-import Position from 'model/graph/position';
 import Workflow from 'model/workflow';
 import { createRoot } from 'react-dom/client';
 import App from './App';
@@ -32,9 +30,17 @@ window.electron.ipcRenderer.on('menu-redo', () => {
 window.electron.ipcRenderer.on('menu-connect', () => {
   const seletedNodes = graph.selection.GetNodes();
   if (seletedNodes.length === 2) {
-    workflow.Execute(
-      new AddConnectionCommand(seletedNodes[0], seletedNodes[1])
+    const existingConnection = graph.GetConnection(
+      seletedNodes[0],
+      seletedNodes[1]
     );
+    if (existingConnection !== undefined) {
+      workflow.Execute(new RemoveConnectionCommand(existingConnection));
+    } else {
+      workflow.Execute(
+        new AddConnectionCommand(seletedNodes[0], seletedNodes[1])
+      );
+    }
     root.render(<App workflow={workflow} />);
   }
 });

@@ -57,6 +57,16 @@ export default class Graph {
     return this.connections.filter((c) => c.IsConnected(node));
   }
 
+  GetConnection(node1: Node, node2: Node): Connection | undefined {
+    const connections = this.connections.filter((c) =>
+      c.Connects(node1, node2)
+    );
+    if (connections.length > 0) {
+      return connections[0];
+    }
+    return undefined;
+  }
+
   GetDisplayNode(node: Node): Node {
     const displayNode = new Node(
       node.id,
