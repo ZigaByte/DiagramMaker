@@ -105,13 +105,6 @@ export default class MenuBuilder {
         },
         { type: 'separator' },
         {
-          label: 'Add Node',
-          accelerator: 'A',
-          click: () => {
-            this.mainWindow.webContents.send('menu-add-node');
-          },
-        },
-        {
           label: 'Connect Nodes',
           accelerator: 'C',
           click: () => {
@@ -207,13 +200,6 @@ export default class MenuBuilder {
             },
           },
           { type: 'separator' },
-          {
-            label: 'Add Node',
-            accelerator: 'A',
-            click: () => {
-              this.mainWindow.webContents.send('menu-add-node');
-            },
-          },
           {
             label: 'Connect Nodes',
             accelerator: 'C',

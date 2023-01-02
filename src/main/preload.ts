@@ -3,7 +3,6 @@ import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 export type MenuCommandUndo = 'menu-undo';
 export type MenuCommandRedo = 'menu-redo';
 
-export type MenuCommandAddNode = 'menu-add-node';
 export type MenuCommandConnect = 'menu-connect';
 export type MenuCommandDelete = 'menu-delete';
 
