@@ -73,21 +73,24 @@ export default class GraphView extends React.Component<
     } else if (graph.EditingAnyNode()) {
       onCommand(new NodeStopEditTextCommand());
       event.stopPropagation();
-    } else if (!graph.selection.IsEmpty()) {
-      // TODO: There should probably be some sort of delay here. Or it should be done on up.
-      onCommand(new SelectionDeselectCommand());
-      event.stopPropagation();
     } else {
       const startPosition = new Position(
         event.clientX - graph.graph_offset.offset.x,
         event.clientY - graph.graph_offset.offset.y
       );
       onCommand(new SelectionBoxStartCommand(true, startPosition));
+      event.stopPropagation();
     }
   };
 
   mouseUp = (event: React.MouseEvent) => {
     const { graph, onCommand } = this.props;
+    console.log(
+      graph.graph_offset.dragging,
+      graph.selection.dragging,
+      graph.selectionBox.active,
+      !graph.selection.IsEmpty()
+    );
     if (graph.graph_offset.dragging) {
       onCommand(new GraphStartDragCommand(false));
       event.stopPropagation();
@@ -99,7 +102,12 @@ export default class GraphView extends React.Component<
         event.clientX - graph.graph_offset.offset.x,
         event.clientY - graph.graph_offset.offset.y
       );
+      const validSelection = graph.selectionBox.GetSize().lengthSquared() > 0;
       onCommand(new SelectionBoxStartCommand(false, endPosition));
+
+      if (!validSelection && !graph.selection.IsEmpty()) {
+        onCommand(new SelectionDeselectCommand());
+      }
       event.stopPropagation();
     }
   };
