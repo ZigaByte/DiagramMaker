@@ -1,6 +1,5 @@
 import Graph from 'model/graph/graph';
 import Position from 'model/graph/position';
-import { compileFunction } from 'vm';
 import ICommand from './icommand';
 
 export default class SelectionBoxStartCommand implements ICommand {
