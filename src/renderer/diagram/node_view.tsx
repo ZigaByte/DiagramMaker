@@ -1,13 +1,12 @@
-import SelectionDragCommand from 'model/commands/selection_drag_command';
 import ICommand from 'model/commands/icommand';
 import SelectionAddNodeCommand from 'model/commands/selection_add_node_command';
 import SelectionStartDragCommand from 'model/commands/selection_start_drag_command';
 import Node from 'model/graph/node';
-import Position from 'model/graph/position';
 import React from 'react';
 import './node_style.css';
-import AddNodeCommand from 'model/commands/add_node_command';
 import NodeEditTextCommand from 'model/commands/node_edit_text_command';
+import NodeStopEditTextCommand from 'model/commands/node_stop_edit_text_command';
+import NodeTextAreaView from './node_text_area_view';
 
 type NodeViewProps = {
   node: Node;
@@ -44,50 +43,14 @@ export default class NodeView extends React.Component<
     }
   };
 
-  mouseMove = (event: React.MouseEvent) => {
-    const { node, onCommand } = this.props;
-    if (node.dragging) {
-      onCommand(
-        new SelectionDragCommand(new Position(event.movementX, event.movementY))
-      );
-      event.stopPropagation();
-    }
-  };
-
-  onTextEdit = (event: React.ChangeEvent) => {
-    const { node, onCommand } = this.props;
-    onCommand(new NodeEditTextCommand(node.id, event.target.value));
-    event.stopPropagation();
-  };
-
   render() {
-    const { node } = this.props;
-
-    const style = {
-      position: 'absolute',
-      left: node.position.x,
-      top: node.position.y,
-      width: 'fit-content',
-      height: 'fit-content',
-      transform: 'translate(-50%, -50%)',
-    };
-    const isSelected = node.selected;
-
-    const selectedClass = isSelected ? 'selected' : '';
+    const { node, onCommand } = this.props;
 
     let nodeHtml;
-
     if (node.editing) {
-      const classes = `node_edit ${selectedClass}`;
-      nodeHtml = (
-        <textarea
-          onChange={this.onTextEdit}
-          className={classes}
-          defaultValue={node.text}
-        />
-      );
+      nodeHtml = <NodeTextAreaView node={node} onCommand={onCommand} />;
     } else {
-      const classes = `node ${selectedClass}`;
+      const classes = node.selected ? 'node selected' : 'node';
       nodeHtml = (
         <div className={classes}>
           {node.text.split('\n').map((textPart, i) => {
@@ -102,15 +65,21 @@ export default class NodeView extends React.Component<
       );
     }
 
+    const positionStyle = {
+      position: 'absolute',
+      left: node.position.x,
+      top: node.position.y,
+      width: 'fit-content',
+      height: 'fit-content',
+      transform: 'translate(-50%, -50%)',
+    };
+
     return (
       <div
-        style={style}
+        style={positionStyle}
         onMouseDown={this.mouseDown}
-        onMouseMove={this.mouseMove}
         onMouseUp={this.mouseUp}
-        onKeyDown={() => {}}
-        role="button"
-        tabIndex={0}
+        role="none"
       >
         {nodeHtml}
       </div>

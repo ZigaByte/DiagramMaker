@@ -27,7 +27,7 @@
   padding:10px;
   background-color: white;
   color: black;
-  user-select: none;
+  /* user-select: none; */
   border: 3px solid #888;
 }
 

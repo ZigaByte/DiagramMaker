@@ -10,10 +10,14 @@ export default class AddNodeCommand implements ICommand {
 
   constructor(position: Position) {
     this.position = position;
-    this.node = new Node(-1, this.position, 'New Node');
+    this.node = new Node(-1, this.position, '');
+    this.node.editing = true;
   }
 
   Execute(graph: Graph): void {
+    graph.GetNodes().forEach((node) => {
+      node.editing = false;
+    });
     graph.AddNode(this.node);
   }
 

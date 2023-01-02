@@ -130,11 +130,9 @@ export default class GraphView extends React.Component<
         onMouseUp={this.mouseUp}
         onMouseDown={this.mouseDown}
         onMouseLeave={this.mouseUp}
-        // This is how we can handle different keys
         onKeyDown={this.keyDown}
         onKeyUp={this.keyUp}
-        tabIndex={0}
-        role="button"
+        role="none"
         style={{
           position: 'absolute',
           width: '100%',
