@@ -18,10 +18,13 @@ export default class AddConnectionCommand implements ICommand {
 
   Execute(graph: Graph): void {
     graph.AddConnection(this.connection);
+    graph.selection.Clear();
   }
 
   Undo(graph: Graph): void {
     graph.RemoveConnection(this.connection);
+    graph.selection.Add(this.node1);
+    graph.selection.Add(this.node2);
   }
 
   Combine = (additive: ICommand): ICommand => {
