@@ -57,7 +57,6 @@ export default class Workflow {
         lastCommand = this.undoneCommands.pop();
       }
     }
-    // console.log(this.commnadHistory);
   }
 
   GetGraph(): Graph {

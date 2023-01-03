@@ -34,10 +34,7 @@ export default class NodeTextAreaView extends React.Component<
   tryFocus = () => {
     const { node } = this.props;
     if (node.editing) {
-      console.log('Trying to focus');
-      console.log(this.textAreaRef.current);
       this.textAreaRef.current!.focus();
-      console.log(document.activeElement);
     }
   };
 
@@ -55,7 +52,6 @@ export default class NodeTextAreaView extends React.Component<
   };
 
   render() {
-    console.log('Render');
     const { node } = this.props;
 
     const classes = node.selected ? 'node_edit selected' : 'node_edit';
